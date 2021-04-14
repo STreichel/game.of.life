@@ -12,7 +12,7 @@ export class SimulatorComponent implements OnInit {
   grid: boolean[][];
 
   constructor() {
-    let grid = new Array<boolean[]>(this.numRows);
+    this.grid = new Array<boolean[]>(this.numRows);
     for (var i=0; i < this.grid.length; i++) {
       this.grid[i] = new Array<boolean>(this.numCols);
       for (var j=0; j < this.grid[i].length; j++) {
