@@ -1,1 +1,11 @@
-<div>{{grid}}</div>
+
+<button mat-raised-button color="primary">Click</button>
+
+<table>
+    <tr *ngFor="let row of grid;
+      let i = index" [class.alive]="grid[i][j]" [class.dead]="!grid[i][j]">
+        <td *ngFor="let cell of row; 
+          let j = index" [class.alive]="grid[i][j]" [class.dead]="!grid[i][j]">
+        </td>
+    </tr>
+  </table>

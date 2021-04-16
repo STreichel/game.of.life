@@ -1,0 +1,10 @@
+td {
+    width: 4px;
+    height: 4px;
+  }
+td.alive {
+    background-color: #18e75c;
+  }
+td.dead {
+    background-color: #e718a3;
+  }
