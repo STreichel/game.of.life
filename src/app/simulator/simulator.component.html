@@ -1,11 +1,11 @@
-
-<button mat-raised-button color="primary">Click</button>
+<button (click)="runOneStep()">Run One Step</button>
 
 <table>
     <tr *ngFor="let row of grid;
       let i = index" [class.alive]="grid[i][j]" [class.dead]="!grid[i][j]">
         <td *ngFor="let cell of row; 
-          let j = index" [class.alive]="grid[i][j]" [class.dead]="!grid[i][j]">
+          let j = index" [class.alive]="grid[i][j]" [class.dead]="!grid[i][j]"
+          (click)="toggleCell(i, j)">
         </td>
     </tr>
   </table>

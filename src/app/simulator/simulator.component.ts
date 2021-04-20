@@ -19,9 +19,24 @@ export class SimulatorComponent implements OnInit {
         this.grid[i][j] = Math.random() < 0.2;
       }
     }
-  }  
+  }
   
+  runOneStep(){
+    let newGrid = new Array<boolean[]>(this.numRows);
+    for (var i=0; i < this.grid.length; i++) {
+      newGrid[i] = new Array<boolean>(this.numCols);
+      for (var j=0; j < this.grid[i].length; j++) {
+        newGrid[i][j] = !this.grid[i][j];
+      }
+    }
+    this.grid = newGrid;
+  }
+
   ngOnInit(): void {
+  }
+
+  toggleCell(i: number, j: number): void {
+    this.grid[i][j] = !this.grid[i][j]
   }
 
 }
