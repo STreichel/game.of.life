@@ -1,11 +1,15 @@
 <button (click)="runOneStep()">Run One Step</button>
-
+<button (click)="Start()">Start</button>
+<button (click)="clear()">Clear</button>
+Hovered Cell: {{ hi }},{{ hj }} has {{ numNeighbors(hi, hj) }} neighbors.
+   
+    
 <table>
     <tr *ngFor="let row of grid;
       let i = index" [class.alive]="grid[i][j]" [class.dead]="!grid[i][j]">
         <td *ngFor="let cell of row; 
           let j = index" [class.alive]="grid[i][j]" [class.dead]="!grid[i][j]"
-          (click)="toggleCell(i, j)">
+          (click)="toggleCell(i, j)" (mouseover)="onHover(i, j)">
         </td>
     </tr>
   </table>
