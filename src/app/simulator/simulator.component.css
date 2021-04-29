@@ -3,8 +3,8 @@ td {
     height: 4px;
   }
 td.alive {
-    background-color: #18e75c;
+    background-color: #d6d5d8;
   }
 td.dead {
-    background-color: #e718a3;
+    background-color: #05031ffb;
   }

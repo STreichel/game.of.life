@@ -9,7 +9,7 @@ import { timer, Subscription } from 'rxjs';
 export class SimulatorComponent implements OnInit {
   
   numRows: number = 70;
-  numCols: number = 80;
+  numCols: number = 150;
   
   grid: boolean[][];
   
@@ -52,11 +52,14 @@ export class SimulatorComponent implements OnInit {
   }
   
   Start(){
-    
+    const ti = timer(1000, 150);    
+    this.run = ti.subscribe(t => {    
+          this.runOneStep();
+    });    
   }
 
-  clear(){
-
+  Pause(){
+    this.run.unsubscribe();
   }
 
   isAlive(i: number, j: number): boolean {
@@ -79,14 +82,7 @@ export class SimulatorComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    const ti = timer(2000,1000);    
-    this.run = ti.subscribe(t => {    
-          
-    });    
-  }
-
-  ngOnDestroy() {    
-    this.run.unsubscribe();
+    
   }
 
   toggleCell(i: number, j: number): void {
