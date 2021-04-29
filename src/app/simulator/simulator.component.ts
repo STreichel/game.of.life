@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { timer, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-simulator',
@@ -18,6 +19,9 @@ export class SimulatorComponent implements OnInit {
     this.hi = i;
     this.hj = j;
   }
+
+  private run: Subscription;    
+
 
   constructor() {
     this.grid = new Array<boolean[]>(this.numRows);
@@ -46,17 +50,14 @@ export class SimulatorComponent implements OnInit {
     }
     this.grid = newGrid
   }
+  
   Start(){
-    let newGrid = new Array<boolean[]>(this.numRows);
-     for (var i=0; i < this.grid.length ; i++) {
-       newGrid[i] = new Array<boolean>(this.numCols);
-      for (var j=0; j < this.grid[i].length; j++) {
-         newGrid[i][j] = Math.random() < 0.2;
-       }
-     }
-    this.grid = newGrid;
     
-   }
+  }
+
+  clear(){
+
+  }
 
   isAlive(i: number, j: number): boolean {
     if (i < 0 || i >= this.numRows || j < 0 || j >= this.numCols) {
@@ -76,12 +77,16 @@ export class SimulatorComponent implements OnInit {
     }
           return n;
   }
-
-  clear(){
-
-  }
   
   ngOnInit(): void {
+    const ti = timer(2000,1000);    
+    this.run = ti.subscribe(t => {    
+          
+    });    
+  }
+
+  ngOnDestroy() {    
+    this.run.unsubscribe();
   }
 
   toggleCell(i: number, j: number): void {
