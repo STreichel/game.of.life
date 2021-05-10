@@ -25,8 +25,8 @@ export class SimulatorComponent implements OnInit {
   }
 
   startDrawing (i:number, j:number) {
-    this.isPenDown == true;
-    this.isBirthPen = this.grid[i][j];
+    this.isPenDown = true;
+    this.isBirthPen = !this.grid[i][j];
     this.grid[i][j] = !this.grid[i][j];
   }
 
