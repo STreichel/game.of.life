@@ -8,20 +8,33 @@ import { timer, Subscription } from 'rxjs';
 })
 export class SimulatorComponent implements OnInit {
   
-  numRows: number = 70;
+  numRows: number = 100;
   numCols: number = 150;
   
   grid: boolean[][];
   
   hi: number = -1;
   hj: number = -1;
-  onHover(i: number, j: number) {
-    this.hi = i;
-    this.hj = j;
-  }
 
   private run: Subscription;    
+  isPenDown = false;
+  isBirthPen = false;
 
+  finishDrawing () {
+   this.isPenDown = false;
+  }
+
+  startDrawing (i:number, j:number) {
+    this.isPenDown == true;
+    this.isBirthPen = this.grid[i][j];
+    this.grid[i][j] = !this.grid[i][j];
+  }
+
+  onHover (i:number, j:number) {
+    if (this.isPenDown) {
+      this.grid[i][j] = this.isBirthPen;
+    }
+  }
 
   constructor() {
     this.grid = new Array<boolean[]>(this.numRows);
@@ -52,7 +65,7 @@ export class SimulatorComponent implements OnInit {
   }
   
   Start(){
-    const ti = timer(1000, 150);    
+    const ti = timer(1000, 25);    
     this.run = ti.subscribe(t => {    
           this.runOneStep();
     });    

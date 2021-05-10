@@ -8,3 +8,7 @@ td.alive {
 td.dead {
     background-color: #05031ffb;
   }
+
+table {
+  border-collapse: collapse;
+}
