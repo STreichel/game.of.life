@@ -76,14 +76,13 @@ export class SimulatorComponent implements OnInit {
       this.run.unsubscribe();
   }
 
-  Draw (){
+  Reset (){
     let newGrid = new Array<boolean[]>(this.numRows);
     for (let i = 0; i < this.grid.length; i++) {
       newGrid[i] = new Array<boolean>(this.numCols);
       for (let j = 0; j < this.grid[i].length; j++) {
         newGrid[i][j] = false;
       }
-    this.runOneStep(); 
     }
     this.grid = newGrid;
   }    
