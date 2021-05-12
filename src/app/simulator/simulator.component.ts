@@ -71,7 +71,7 @@ export class SimulatorComponent implements OnInit {
     });    
   }
 
-  Pause(){
+  Stop(){
     if (this.run != null)
       this.run.unsubscribe();
   }
