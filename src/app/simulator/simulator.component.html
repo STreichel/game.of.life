@@ -1,11 +1,13 @@
-<button (click)="runOneStep()">Run One Step</button>
-<button (click)="Start()">Start</button>
-<button (click)="Reset()">Reset</button>
-<button (click)="Stop()">Stop</button>
-Hovered Cell: {{ hi }},{{ hj }} has {{ numNeighbors(hi, hj) }} neighbors.
+<button mat-button [matMenuTriggerFor]="menu">Menu</button>
 
-   
-    
+<mat-menu #menu="matMenu">
+  <button (click)="Start()">Start</button>
+  <button (click)="Stop()">Stop</button>
+  <button (click)="Reset()">Reset</button>
+  <button (click)="runOneStep()">runOneStep</button>
+</mat-menu>
+
+
 <table (window:mouseup)="finishDrawing()">
     <tr *ngFor="let row of grid;
       let i = index" [class.alive]="grid[i][j]" [class.dead]="!grid[i][j]">

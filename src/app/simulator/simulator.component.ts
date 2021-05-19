@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { timer, Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-simulator',
@@ -114,3 +115,4 @@ export class SimulatorComponent implements OnInit {
     this.grid[i][j] = !this.grid[i][j]
   }
 }
+

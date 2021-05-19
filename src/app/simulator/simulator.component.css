@@ -12,3 +12,6 @@ td.dead {
 table {
   border-collapse: collapse;
 }
+.tp-selected-value {
+  margin: 15px 0;
+}
