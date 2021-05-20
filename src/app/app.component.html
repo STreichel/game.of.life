@@ -1,2 +1,13 @@
-<app-simulator></app-simulator>
 
+<button mat-button [matMenuTriggerFor]="menu">Menu</button>
+  
+<mat-menu #menu="matMenu">
+      <div ngIf="">
+        <button (click)="mode = 'GameOfLife'">GameOfLife</button>
+      </div>
+      <div ngIf="">
+        <button (click)="mode = 'TicTacToe'">TicTacToe</button>
+      </div>
+</mat-menu>
+    
+<app-simulator *ngIf="mode == 'GameOfLife'"></app-simulator>
