@@ -2,12 +2,8 @@
 <button mat-button [matMenuTriggerFor]="menu">Menu</button>
   
 <mat-menu #menu="matMenu">
-      <div ngIf="">
-        <button (click)="mode = 'GameOfLife'">GameOfLife</button>
-      </div>
-      <div ngIf="">
-        <button (click)="mode = 'TicTacToe'">TicTacToe</button>
-      </div>
+  <button mat-menu-item (click)="mode = 'GameOfLife'">GameOfLife</button>
+  <button mat-menu-item (click)="mode = 'TicTacToe'">TicTacToe</button>
 </mat-menu>
     
 <app-simulator *ngIf="mode == 'GameOfLife'"></app-simulator>
