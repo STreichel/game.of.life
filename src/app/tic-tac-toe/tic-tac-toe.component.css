@@ -1,0 +1,20 @@
+.cell {
+  width:100px;
+  height:100px;
+  border: 5px solid #702c79;
+  background: #b99898;
+  font-size: 46pt;
+  font-family: arial;
+  font-weight: bold;
+  text-align: center;
+  margin: auto;
+}
+
+.cell:hover {
+  background: #96b846;
+  text-align: center;
+}
+
+#board{
+  margin:auto;
+}

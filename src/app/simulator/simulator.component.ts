@@ -7,6 +7,7 @@ import { timer, Subscription } from 'rxjs';
   templateUrl: './simulator.component.html',
   styleUrls: ['./simulator.component.css']
 })
+
 export class SimulatorComponent implements OnInit {
   
   numRows: number = 100;
@@ -114,5 +115,6 @@ export class SimulatorComponent implements OnInit {
   toggleCell(i: number, j: number): void {
     this.grid[i][j] = !this.grid[i][j]
   }
+ 
 }
 

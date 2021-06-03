@@ -9,12 +9,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule } from '@angular/material/menu';
+import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SimulatorComponent
+    SimulatorComponent,
+    TicTacToeComponent,
   ],
   imports: [
     BrowserModule,

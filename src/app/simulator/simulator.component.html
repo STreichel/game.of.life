@@ -7,7 +7,6 @@
   <button (click)="runOneStep()">runOneStep</button>
 </mat-menu>
 
-
 <table (window:mouseup)="finishDrawing()">
     <tr *ngFor="let row of grid;
       let i = index" [class.alive]="grid[i][j]" [class.dead]="!grid[i][j]">
