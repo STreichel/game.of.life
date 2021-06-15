@@ -11,6 +11,7 @@
 }
 
 .cell:hover {
+  cursor: pointer;
   background: #96b846;
   text-align: center;
 }
