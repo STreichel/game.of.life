@@ -12,6 +12,7 @@ export class TicTacToeComponent implements OnInit {
 
   player1='X';
   player2='O';
+  playerTurn= this.player1 || this.player2;
 
   createBoard = (): Array<Array<string>> => [['', '', ''], ['', '', ''], ['', '', '']]
   
@@ -28,10 +29,10 @@ export class TicTacToeComponent implements OnInit {
       }
     }
   }
+ 
+  cell(){
 
-  Play(){
-    
-  }  
+  }
 
   NewGame(){
     this.board = this.createBoard();
@@ -42,15 +43,12 @@ export class TicTacToeComponent implements OnInit {
     }
   }
 
-  takeTurn(i, j){
+  takeTurn(){
     this.board = this.createBoard();
     for (let i = 0; i < this.board.length; ++i) {
       for (let j = 0; j < this.board[i].length; ++j) {
-        let r = Math.floor(Math.random() * 3);
-        if (r == 1) {
-          this.board[i][j] = this.player1;
-        } else if (r == 2) {
-          this.board[i][j] = this.player2;
+        if (this.cell === null){
+          this.board[i][j] = this.playerTurn;
         }
       }
     }
