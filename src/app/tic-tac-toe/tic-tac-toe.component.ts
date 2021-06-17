@@ -38,7 +38,13 @@ export class TicTacToeComponent implements OnInit {
 
   takeTurn(i:number, j:number){
     this.board[i][j] = '';
-          this.board[i][j] = this.playerTurn;
+      this.board[i][j] = this.playerTurn;
+        if(this.playerTurn==this.player1){
+          this.playerTurn=this.player2;
+        }
+          else{
+            this.playerTurn=this.player1;
+          }
   }
 
   ngOnInit(): void {
