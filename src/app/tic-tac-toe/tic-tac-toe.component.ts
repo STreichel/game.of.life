@@ -12,7 +12,9 @@ export class TicTacToeComponent implements OnInit {
 
   player1='X';
   player2='O';
-  playerTurn= this.player1 || this.player2;
+  playerTurn= this.player1;
+
+  cell= null || 'X' || 'O';
 
   createBoard = (): Array<Array<string>> => [['', '', ''], ['', '', ''], ['', '', '']]
   
@@ -20,21 +22,12 @@ export class TicTacToeComponent implements OnInit {
     this.board = this.createBoard();
     for (let i = 0; i < this.board.length; ++i) {
       for (let j = 0; j < this.board[i].length; ++j) {
-        let r = Math.floor(Math.random() * 3);
-        if (r == 1) {
-          this.board[i][j] = 'X';
-        } else if (r == 2) {
-          this.board[i][j] = 'O';
-        }
+        this.board[i][j] ='';
       }
     }
   }
  
-  cell(){
-
-  }
-
-  NewGame(){
+  StartNewGame(){
     this.board = this.createBoard();
     for (let i = 0; i < this.board.length; ++i) {
       for (let j = 0; j < this.board[i].length; ++j) {
@@ -43,15 +36,9 @@ export class TicTacToeComponent implements OnInit {
     }
   }
 
-  takeTurn(){
-    this.board = this.createBoard();
-    for (let i = 0; i < this.board.length; ++i) {
-      for (let j = 0; j < this.board[i].length; ++j) {
-        if (this.cell === null){
+  takeTurn(i:number, j:number){
+    this.board[i][j] = '';
           this.board[i][j] = this.playerTurn;
-        }
-      }
-    }
   }
 
   ngOnInit(): void {

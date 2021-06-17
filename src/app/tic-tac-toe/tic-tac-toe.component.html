@@ -3,12 +3,12 @@
 <button mat-button [matMenuTriggerFor]="menu">TicTacToe</button>
 
 <mat-menu #menu="matMenu">
-  <button (click)="NewGame()">NewGame</button>
+  <button (click)="StartNewGame()">StartNewGame</button>
 </mat-menu>
 
 <table id="board">
   <tr *ngFor="let row of board; let i = index">
-    <td *ngFor="let cell of row; let j = index" class="cell">
-      <button (click)="takeTurn(i, j)"></button>{{board[i][j]}}</td>
+    <td *ngFor="let cell of row; let j = index" class="cell"
+      (click)="takeTurn(i, j)">{{board[i][j]}}</td>
   </tr>  
 </table>
