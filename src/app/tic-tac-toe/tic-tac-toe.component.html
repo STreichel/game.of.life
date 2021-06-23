@@ -12,3 +12,13 @@
       (click)="takeTurn(i, j)">{{board[i][j]}}</td>
   </tr>  
 </table>
+
+<mat-card class="winnerCheck">
+  <mat-card-header>
+    <mat-card-title>Winner:</mat-card-title>
+  </mat-card-header>
+    <mat-card-content *ngIf = "winner != null" class="winner">{{ winner == "tie" ? "You Both Lose!" : "Winner" }}</mat-card-content>
+  <mat-card-actions class="actions">
+    <button mat-button (click)="StartNewGame()">Start New Game</button>
+  </mat-card-actions>
+</mat-card>  

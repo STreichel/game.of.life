@@ -1,3 +1,4 @@
+
 .cell {
   width:100px;
   height:100px;
@@ -19,3 +20,22 @@
 #board{
   margin:auto;
 }
+
+.winnerCheck{
+  background-color: #f5bf78;
+  max-width:40em;
+  margin:auto;
+  margin-top:2em;
+}
+
+.actions{
+  text-align:auto;
+  margin-left:30em;
+  margin-right:1.5em;
+}
+
+.winner{
+  text-align:center;
+  font-size: 35px;
+}
+

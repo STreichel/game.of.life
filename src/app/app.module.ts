@@ -11,6 +11,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 
+import {MatCardModule} from '@angular/material/card';
+
+
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
     MatRadioModule,
     MatButtonToggleModule,
     MatMenuModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
