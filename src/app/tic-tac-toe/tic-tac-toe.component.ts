@@ -35,6 +35,7 @@ export class TicTacToeComponent implements OnInit {
       for (let j = 0; j < this.board[i].length; ++j) {
         this.board[i][j] = this.board[i][j];
         this.winner = null;
+        this.playerTurn = this.player1;
       }
     }
   }
@@ -43,14 +44,13 @@ export class TicTacToeComponent implements OnInit {
     if(this.board[i][j] != ''){
       return;
     } 
-      this.board[i][j] = this.playerTurn;
-      this.winnerCheck(i, j);
-        if(this.playerTurn == this.player1){
-          this.playerTurn = this.player2;
-        }
-          else{
-           this.playerTurn = this.player1;
-          }
+    this.board[i][j] = this.playerTurn;
+    this.winnerCheck(i, j);
+    if(this.playerTurn == this.player1){
+      this.playerTurn = this.player2;
+    } else {
+        this.playerTurn = this.player1;
+    }
   }
 
   winnerCheck(i, j){
@@ -87,12 +87,13 @@ export class TicTacToeComponent implements OnInit {
           if (this.board[i][j] != ''){
              ++cnt;
           }
-          if (cnt == 9 && this.winner == null){
-            this.winner = 'Draw';
-          } 
-        }
+        } 
+      }
+        if (cnt == 9 && this.winner == null){
+          this.winner = 'Draw';
+        }  
       }     
-  }
+
 
   ngOnInit(): void {
   }

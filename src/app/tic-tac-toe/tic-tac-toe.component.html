@@ -14,12 +14,19 @@
 </table>
 
 <mat-card class="winnerCheck">
-  <mat-card-header>
-    <mat-card-title>Winner:</mat-card-title>
+  <mat-card-header class="header">
+    <mat-card-title>Tic-Tac-Toe</mat-card-title>
   </mat-card-header>
-    <mat-card-content *ngIf = "winner != null" class="winner">
-      {{ winner == "Draw" ? "You Both Lose!" : "Winner" }}</mat-card-content>
+  <mat-card-content *ngIf = "winner != null" class="winner">
+    <div *ngIf = "winner == 'Draw'">Draw, no winner...</div>
+    <div *ngIf = "winner == player1">Player 1 Wins!</div>
+    <div *ngIf = "winner == player2">Player 2 Wins!</div>
+  </mat-card-content>
   <mat-card-actions class="actions">
     <button mat-button (click)="StartNewGame()">Start New Game</button>
   </mat-card-actions>
 </mat-card>  
+
+
+
+

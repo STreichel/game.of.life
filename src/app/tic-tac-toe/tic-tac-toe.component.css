@@ -36,6 +36,13 @@
 
 .winner{
   text-align:center;
-  font-size: 25px;
+  color:rgb(255, 0, 47);
+  font-family: cursive;
+  font-size:1.5em;
+  max-height:.1em;
+}
+
+.header{
+  max-width: 10em;
 }
 
