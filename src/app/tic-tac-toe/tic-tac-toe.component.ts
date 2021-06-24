@@ -16,6 +16,7 @@ export class TicTacToeComponent implements OnInit {
   playerTurn = this.player1;
 
   winner = null;
+  
 
   createBoard = (): Array<Array<string>> => [['', '', ''], ['', '', ''], ['', '', '']]
   
@@ -42,7 +43,6 @@ export class TicTacToeComponent implements OnInit {
     if(this.board[i][j] != ''){
       return;
     } 
-    this.board[i][j] = '';
       this.board[i][j] = this.playerTurn;
       this.winnerCheck(i, j);
         if(this.playerTurn == this.player1){
@@ -54,39 +54,44 @@ export class TicTacToeComponent implements OnInit {
   }
 
   winnerCheck(i, j){
-                  
-/// 3 in a row, rows 
-    for (let i = 0; i < 3; i++){
-      if (this.board[i][0] == this.board[i][1] && this.board[i][0] == this.board[i][2]){
-         this.winner = this.board[i][0];}
-           return this.winner;
-    }    
-
-/// 3 in a row, columns  
-    for (let i = 0; i < 3; i++){
-      if(this.board[0][i] == this.board[1][i] && this.board[0][i] == this.board[2][i]){
-        this.winner = this.board[0][i];}
-          return this.winner;
-     }
-
-/// 3 in a row, diagonal
-    if(this.board[0][0] == this.board[1][1] && this.board[0][0] == this.board[2][2]){
-      this.winner = this.board[0][0];
-        return this.winner;
-    }  
-        if(this.board[2][0] == this.board [2][2] && this.board[2][0] == this.board[0][2]){
-          this.winner = this.board[2][0];
+/// Rows
+      for (let i = 0; i < 3; i++){
+        if (this.board[i][0] != '' && this.board[i][0] == this.board[i][1] 
+          && this.board[i][0]== this.board[i][2]){
+            this.winner = this.board[i][0];
             return this.winner;
         }
-
-/// If board is full without winner, stop loop display 'Draw'
-     if (this.winner == null && this.board.length == 0){
-       this.winner = 'tie';
       }
-
-///   If no winner and board not full, continue 
-     if (this.board.length != 0 && this.board[i][j] != this.winner)
-        this.takeTurn;
+// Columns
+      if(this.board[0][j] != '' && this.board[0][j] == this.board[1][j] 
+        && this.board[0][j] == this.board[2][j]){        
+          this.winner = this.board[0][j];
+          return this.winner;
+      }
+// Diagonal
+      if(this.board[0][0] != '' && this.board[0][0] == this.board[1][1] 
+        && this.board[0][0] == this.board[2][2]){
+          this.winner = this.board[0][0];
+            return this.winner; 
+      }
+      if(this.board[2][0] != '' && this.board[2][0] == this.board[1][1] 
+        && this.board[2][0] == this.board[0][2]){
+          this.winner = this.board[2][0];
+            return this.winner;
+      }    
+  
+/// If board is full without winner, display 'Draw'
+      let cnt = 0;
+      for (let i = 0; i < this.board.length; ++i) {
+        for (let j = 0; j < this.board.length; ++j) { 
+          if (this.board[i][j] != ''){
+             ++cnt;
+          }
+          if (cnt == 9 && this.winner == null){
+            this.winner = 'Draw';
+          } 
+        }
+      }     
   }
 
   ngOnInit(): void {
