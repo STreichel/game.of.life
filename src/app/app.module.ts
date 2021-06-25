@@ -9,9 +9,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule } from '@angular/material/menu';
-import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
+
+import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
+import { CheckersComponent } from './checkers/checkers.component';
 
 
 
@@ -20,6 +22,7 @@ import {MatCardModule} from '@angular/material/card';
     AppComponent,
     SimulatorComponent,
     TicTacToeComponent,
+    CheckersComponent,
   ],
   imports: [
     BrowserModule,

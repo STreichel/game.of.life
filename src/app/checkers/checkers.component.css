@@ -1,0 +1,20 @@
+.board{
+  margin:auto;
+}
+
+.cell {
+  width:50px;
+  height:50px;
+  border: 5px solid #003c80;
+  background: #0c3c3d;
+  text-align: center;
+  
+}
+
+.board tr:nth-child(2n) td:nth-child(2n),
+.board tr:nth-child(2n+1) td:nth-child(2n+1) {
+    background-color:rgb(109, 211, 230);
+}
+
+
+

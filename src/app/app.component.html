@@ -4,8 +4,13 @@
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="mode = 'GameOfLife'">GameOfLife</button>
   <button mat-menu-item (click)="mode = 'TicTacToe'">TicTacToe</button>
+  <button mat-menu-item (click)="mode = 'Checkers'">Checkers</button>
 </mat-menu>
     
 <app-simulator *ngIf="mode == 'GameOfLife'"></app-simulator>
 
 <app-tic-tac-toe *ngIf="mode == 'TicTacToe'"></app-tic-tac-toe>
+
+<app-checkers *ngIf="mode == 'Checkers'"></app-checkers>
+
+
