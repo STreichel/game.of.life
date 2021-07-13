@@ -1,10 +1,16 @@
 <button mat-button [matMenuTriggerFor]="menu">Checkers</button>
 
 <mat-menu #menu="matMenu">
+  <button (click)="newGame()">New Game</button>
   </mat-menu>
 
   <table id="board" class="board">
     <tr *ngFor="let row of board; let i = index">
-      <td *ngFor="let cell of row; let j = index" class="cell">{{board[i][j]}}</td>
-    </tr>  
+      <td *ngFor="let cell of row; let j = index" class="cell">
+        <img source='*ngIf="board[i][j] == RED_PAWN"'>{{board[i][j]}}
+      </td>
+    </tr>
   </table>
+
+     
+  
