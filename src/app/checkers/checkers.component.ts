@@ -15,10 +15,15 @@ export class CheckersComponent implements OnInit {
   numCols: number = 8;
   
   EMPTY_CELL='';
+
   RED_PAWN='r';
   RED_KING='R';
-  BLACK_PAWN='b';
+  BLACK_PAWN="b";
   BLACK_KING='B';
+
+  PLAYER_NONE=0;
+  PLAYER_RED=1;
+  PLAYER_BLACK=2;
 
   constructor() {
     this.newGame();
@@ -56,6 +61,9 @@ export class CheckersComponent implements OnInit {
     return this.board;   
   }
 
+  whichPlayer() {
+
+  }
 
 
 

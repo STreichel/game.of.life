@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 
 import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 import { CheckersComponent } from './checkers/checkers.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -32,6 +33,7 @@ import { CheckersComponent } from './checkers/checkers.component';
     MatButtonToggleModule,
     MatMenuModule,
     MatCardModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
