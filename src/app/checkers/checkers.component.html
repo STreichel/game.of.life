@@ -7,10 +7,10 @@
 
   <table id="board" class="board">
     <tr *ngFor="let row of board; let i = index">
-      <td *ngFor="let cell of row; let j = index" class="cell">
-        <i class="fad fa-circle" *ngIf="board[i][j] == BLACK_PAWN"></i>
-        <i class="fas fa-circle" *ngIf="board[i][j] == RED_PAWN"
-        (click)="whichPlayer(i, j)"></i>{{board[i][j]}}
+      <td *ngFor="let cell of row; let j = index" class="cell" (click)="whichPlayer(i, j)">
+        <span *ngIf="board[i][j] != EMPTY_CELL">
+          <fa-icon [icon]="iconForPiece(i, j)" [class]="iconClassForPiece(i, j)"></fa-icon>
+        </span>
       </td>
     </tr>
   </table>

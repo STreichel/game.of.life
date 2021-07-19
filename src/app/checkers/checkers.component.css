@@ -22,7 +22,10 @@
   background-color: transparent;
 }
 
+.redPiece {
+  color: burlywood;
+}
 
-
-
-
+.blackPiece {
+  color: black;
+}

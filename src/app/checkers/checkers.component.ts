@@ -1,6 +1,5 @@
-import { BaseOverlayDispatcher } from '@angular/cdk/overlay/dispatchers/base-overlay-dispatcher';
 import { Component, OnInit } from '@angular/core';
-import { AttachSession } from 'protractor/built/driverProviders';
+import { faChessKing, faChessPawn } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-checkers',
@@ -8,6 +7,8 @@ import { AttachSession } from 'protractor/built/driverProviders';
   styleUrls: ['./checkers.component.css']
 })
 export class CheckersComponent implements OnInit {
+  public faChessPawn = faChessPawn;
+  public faChessKing = faChessKing;
 
   board: Array<Array<string>>;
 
@@ -61,12 +62,31 @@ export class CheckersComponent implements OnInit {
     return this.board;   
   }
 
-  whichPlayer() {
-
+  playerPiece(piece: string) {
+    if (piece == this.RED_PAWN || piece == this.RED_KING) {
+      return this.PLAYER_RED;
+    }
+    if (piece == this.BLACK_PAWN || piece == this.BLACK_KING) {
+      return this.PLAYER_BLACK;
+    }
+    return this.PLAYER_NONE;
   }
 
-
-
+  iconForPiece(i: number, j: number) {
+    if (this.board[i][j] == this.BLACK_PAWN || this.board[i][j] == this.RED_PAWN) {
+      return this.faChessPawn;
+    }
+    return this.faChessKing;
+  }
+  iconClassForPiece(i: number, j: number): string {
+    let player = this.playerPiece(this.board[i][j]);
+    if (player == this.PLAYER_RED) {
+      return "redPiece";
+    } else if (player == this.PLAYER_BLACK) {
+      return "blackPiece";
+    }
+    return "";
+  }
 
   //inBounds() {
 //  if(i >= 0 && i < i &&
