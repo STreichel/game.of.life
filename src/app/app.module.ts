@@ -14,8 +14,9 @@ import { MatCardModule } from '@angular/material/card';
 
 import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 import { CheckersComponent } from './checkers/checkers.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faChessPawn, faChessKing } from '@fortawesome/free-solid-svg-icons';
 
 
 @NgModule({
@@ -40,5 +41,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 
 export class AppModule {
+  constructor(private library: FaIconLibrary) {
+    library.addIcons(faChessPawn, faChessKing);
+  }
 }
 

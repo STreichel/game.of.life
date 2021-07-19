@@ -1,7 +1,10 @@
-import { BaseOverlayDispatcher } from '@angular/cdk/overlay/dispatchers/base-overlay-dispatcher';
 import { Component, OnInit } from '@angular/core';
+
+import { faChessKing, faChessPawn } from '@fortawesome/free-solid-svg-icons';
+
 import { ɵangular_packages_platform_browser_dynamic_platform_browser_dynamic_a } from '@angular/platform-browser-dynamic';
 import { AttachSession } from 'protractor/built/driverProviders';
+
 
 @Component({
   selector: 'app-checkers',
@@ -9,6 +12,8 @@ import { AttachSession } from 'protractor/built/driverProviders';
   styleUrls: ['./checkers.component.css']
 })
 export class CheckersComponent implements OnInit {
+  public faChessPawn = faChessPawn;
+  public faChessKing = faChessKing;
 
   board: Array<Array<string>>;
 
@@ -69,15 +74,47 @@ export class CheckersComponent implements OnInit {
     return this.board;   
   }
 
+
+  playerPiece(piece: string) {
+    if (piece == this.RED_PAWN || piece == this.RED_KING) {
+      return this.PLAYER_RED;
+    }
+    if (piece == this.BLACK_PAWN || piece == this.BLACK_KING) {
+      return this.PLAYER_BLACK;
+
   playerPiece(piece: string): number  {
     if(piece == this.RED_PAWN || piece == this.RED_KING){
       return this.PLAYER_RED;
     }  
     else if (piece == this.BLACK_PAWN || piece == this.BLACK_KING){
       return this.PLAYER_BLACK; 
+
     }
     return this.PLAYER_NONE;
   }
+
+
+  iconForPiece(i: number, j: number) {
+    if (this.board[i][j] == this.BLACK_PAWN || this.board[i][j] == this.RED_PAWN) {
+      return this.faChessPawn;
+    }
+    return this.faChessKing;
+  }
+  iconClassForPiece(i: number, j: number): string {
+    let player = this.playerPiece(this.board[i][j]);
+    if (player == this.PLAYER_RED) {
+      return "redPiece";
+    } else if (player == this.PLAYER_BLACK) {
+      return "blackPiece";
+    }
+    return "";
+  }
+
+  //inBounds() {
+//  if(i >= 0 && i < i &&
+//    j >= 0 && j < j)
+    
+//    return true;
 
   // Add css rule
   canPieceMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {
@@ -108,6 +145,7 @@ export class CheckersComponent implements OnInit {
 //     return false;
 //     }
 // }
+
   
 // possibleMoves() {
 //   if (inBounds && playerTurn == PLAYER_RED){

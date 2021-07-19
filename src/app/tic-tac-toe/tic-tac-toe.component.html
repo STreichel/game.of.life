@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <button mat-button [matMenuTriggerFor]="menu">TicTacToe</button>
 
 <mat-menu #menu="matMenu">
@@ -10,7 +8,7 @@
   <tr *ngFor="let row of board; let i = index">
     <td *ngFor="let cell of row; let j = index" class="cell"
       (click)="takeTurn(i, j)">{{board[i][j]}}</td>
-  </tr>  
+  </tr>
 </table>
 
 <mat-card class="winnerCheck">
@@ -25,7 +23,7 @@
   <mat-card-actions class="actions">
     <button mat-button (click)="StartNewGame()">Start New Game</button>
   </mat-card-actions>
-</mat-card>  
+</mat-card>
 
 
 
