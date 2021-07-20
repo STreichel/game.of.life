@@ -32,8 +32,8 @@ export class CheckersComponent implements OnInit {
 
   WINNER = null;
 
-  selected_i: number;
-  selected_j: number;
+  selected_i: number = -1;
+  selected_j: number = -1;
 
   constructor() {
     this.newGame();
@@ -108,17 +108,33 @@ export class CheckersComponent implements OnInit {
     }
   }
 
-  // Add css rule
-  cellClicked(i:number, j:number){
+  onClickedCell(i:number, j:number){
+    this.selected_i = i;
+    this.selected_j = j;
     if (this.activePlayer == this.playerPiece(this.board[i][j])){
       this.canPieceMove;
     }
     this.nextPlayer();
   }
 
+/// css styling
+  isSelected(i:number, j:number): boolean {
+    if(i == this.selected_i && j == this.selected_j){
+    return true;
+    } else {
+      return false;
+    } 
+  }
+
+/// css styling
+  isValidMove(i:number, j:number): boolean {
+    return false;
+  }
+
+
 // inBounds() {
 //   if (this.numRows < 8 && this.numRows > -1 && 
-//     this.numCols <8 && this.numCols > -1){
+//     this.numCols < 8 && this.numCols > -1){
 //      return this.board[i][j];
 //   } else {
 //     return false;

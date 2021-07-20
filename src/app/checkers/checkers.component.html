@@ -7,7 +7,8 @@
 
   <table id="board" class="board">
     <tr *ngFor="let row of board; let i = index">
-      <td *ngFor="let cell of row; let j = index" class="cell" (click)="whichPlayer(i, j)">
+      <td *ngFor="let cell of row; let j = index" class="cell" (click)="whichPlayer(i, j)"
+        [class]="{selected: isSelected(i, j), validMove: isValidMove(i, j)}">
         <span *ngIf="board[i][j] != EMPTY_CELL">
           <fa-icon [icon]="iconForPiece(i, j)" [class]="iconClassForPiece(i, j)"></fa-icon>
         </span>
