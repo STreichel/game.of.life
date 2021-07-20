@@ -11,13 +11,6 @@
         <span *ngIf="board[i][j] != EMPTY_CELL">
           <fa-icon [icon]="iconForPiece(i, j)" [class]="iconClassForPiece(i, j)"></fa-icon>
         </span>
-
-      <td *ngFor="let cell of row; let j = index" class="cell" 
-        (click)="cellClicked(i, j)">
-        <i class="fad fa-circle" *ngIf="board[i][j] == BLACK_PAWN"></i>
-        <i class="fas fa-circe" *ngIf="board[i][j] == RED_PAWN"></i>
-        {{board[i][j]}}
-
       </td>
     </tr>
   </table>

@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { faChessKing, faChessPawn } from '@fortawesome/free-solid-svg-icons';
-
-import { ɵangular_packages_platform_browser_dynamic_platform_browser_dynamic_a } from '@angular/platform-browser-dynamic';
-import { AttachSession } from 'protractor/built/driverProviders';
-
+import { faChessKing, faChessPawn, faCoins, faCrown, faDatabase, faYinYang } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-checkers',
@@ -12,8 +8,9 @@ import { AttachSession } from 'protractor/built/driverProviders';
   styleUrls: ['./checkers.component.css']
 })
 export class CheckersComponent implements OnInit {
-  public faChessPawn = faChessPawn;
-  public faChessKing = faChessKing;
+  
+  faCrown = faCrown;
+  faYingYang = faYinYang;
 
   board: Array<Array<string>>;
 
@@ -49,7 +46,7 @@ export class CheckersComponent implements OnInit {
       for (let j = 0; j < board[i].length; j++){
         board[i][j] = this.EMPTY_CELL;
       }
-    }    
+    }  
     return board;
   };
 
@@ -60,20 +57,19 @@ export class CheckersComponent implements OnInit {
       for (let j = 0; j < 8; j++) {
         if ((i + j) % 2 == 1) {
         this.board[i][j] = this.BLACK_PAWN; 
-        }  
-      }  
-    }   
+        }
+      }
+    }
 // Red pieces starting place
     for (let i = 5; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
         if ((i + j) % 2 == 1) {
-        this.board[i][j] = this.RED_PAWN; 
+        this.board[i][j] = this.RED_PAWN;
         }
-      }  
+      }
     }
-    return this.board;   
+    return this.board;
   }
-
 
   playerPiece(piece: string) {
     if (piece == this.RED_PAWN || piece == this.RED_KING) {
@@ -81,24 +77,14 @@ export class CheckersComponent implements OnInit {
     }
     if (piece == this.BLACK_PAWN || piece == this.BLACK_KING) {
       return this.PLAYER_BLACK;
-
-  playerPiece(piece: string): number  {
-    if(piece == this.RED_PAWN || piece == this.RED_KING){
-      return this.PLAYER_RED;
-    }  
-    else if (piece == this.BLACK_PAWN || piece == this.BLACK_KING){
-      return this.PLAYER_BLACK; 
-
     }
-    return this.PLAYER_NONE;
   }
-
 
   iconForPiece(i: number, j: number) {
     if (this.board[i][j] == this.BLACK_PAWN || this.board[i][j] == this.RED_PAWN) {
-      return this.faChessPawn;
+      return this.faYingYang;
     }
-    return this.faChessKing;
+    return this.faCrown;
   }
   iconClassForPiece(i: number, j: number): string {
     let player = this.playerPiece(this.board[i][j]);
@@ -110,17 +96,10 @@ export class CheckersComponent implements OnInit {
     return "";
   }
 
-  //inBounds() {
-//  if(i >= 0 && i < i &&
-//    j >= 0 && j < j)
-    
-//    return true;
-
-  // Add css rule
   canPieceMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {
     return true;
   }
-  
+
   nextPlayer(){
     if (this.activePlayer == this.PLAYER_RED){
       this.activePlayer = this.PLAYER_BLACK;
@@ -146,7 +125,6 @@ export class CheckersComponent implements OnInit {
 //     }
 // }
 
-  
 // possibleMoves() {
 //   if (inBounds && playerTurn == PLAYER_RED){
 //     check top left (numRows-1, numCols-1)
@@ -160,5 +138,4 @@ export class CheckersComponent implements OnInit {
   
   ngOnInit(): void {
   }
-
 }

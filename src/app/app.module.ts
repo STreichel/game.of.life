@@ -16,7 +16,7 @@ import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 import { CheckersComponent } from './checkers/checkers.component';
 
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faChessPawn, faChessKing } from '@fortawesome/free-solid-svg-icons';
+import { faChessPawn, faChessKing, faCoins, faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
 
 
 @NgModule({
@@ -43,6 +43,7 @@ import { faChessPawn, faChessKing } from '@fortawesome/free-solid-svg-icons';
 export class AppModule {
   constructor(private library: FaIconLibrary) {
     library.addIcons(faChessPawn, faChessKing);
+    library.addIcons(faCoins, faCrown, faYinYang )
   }
 }
 
