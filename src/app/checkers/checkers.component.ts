@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { faChessKing, faChessPawn, faCoins, faCrown, faDatabase, faYinYang } from '@fortawesome/free-solid-svg-icons';
+import { faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-checkers',
@@ -96,10 +96,6 @@ export class CheckersComponent implements OnInit {
     return "";
   }
 
-  canPieceMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {
-    return true;
-  }
-
   nextPlayer(){
     if (this.activePlayer == this.PLAYER_RED){
       this.activePlayer = this.PLAYER_BLACK;
@@ -108,25 +104,45 @@ export class CheckersComponent implements OnInit {
     }
   }
 
-  onClickedCell(i:number, j:number){
+  canPieceMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {
+    return true;
+  }
+
+  onStartMove(i:number, j:number){
     this.selected_i = i;
     this.selected_j = j;
     if (this.activePlayer == this.playerPiece(this.board[i][j])){
       this.canPieceMove;
     }
-    this.nextPlayer();
+  }
+ 
+  onCompleteMove(i:number, j:number){
+    this.board[i][j] = this.board[this.selected_i][this.selected_j];
+
+  }
+//onCompleteMove we want to 
+//   _choose a destination
+// X _transfer player object to new destination/clone new object of same player and place                        
+// X _delete past position player object/delete old object
+
+  onClickedCell(i:number, j:number){
+    if (this.selected_i == -1 || this.selected_j == -1){
+      this.onStartMove(i, j);
+    } else {
+      this.onCompleteMove(i, j);
+    }
   }
 
-/// css styling
+// css styling
   isSelected(i:number, j:number): boolean {
     if(i == this.selected_i && j == this.selected_j){
     return true;
     } else {
       return false;
-    } 
+    }
   }
 
-/// css styling
+// css styling
   isValidMove(i:number, j:number): boolean {
     return false;
   }

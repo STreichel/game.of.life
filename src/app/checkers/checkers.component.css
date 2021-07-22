@@ -1,10 +1,10 @@
 .board{
-  margin:auto;
+  margin: auto;
 }
 
 .cell {
-  width:50px;
-  height:50px;
+  width: 50px;
+  height: 50px;
   border: 5px solid #003c80;
   background: #186d6e;
   text-align: center;
@@ -13,7 +13,7 @@
 
 .board tr:nth-child(2n) td:nth-child(2n),
 .board tr:nth-child(2n+1) td:nth-child(2n+1) {
-    background-color:rgb(109, 211, 230);
+    background-color: rgb(109, 211, 230);
 }
 
 .cell:hover {
@@ -31,10 +31,14 @@
 }
 
 .selected {
-  background-color:rgb(255, 71, 71);
+  background-color: rgb(204, 118, 118);
 }
 
 .validMove {
-  background-color:white;
+  background-color: rgb(32, 163, 6);
+}
+
+.cell.clearCursor {
+  cursor: default;
 }
 
