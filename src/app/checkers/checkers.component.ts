@@ -128,8 +128,8 @@ export class CheckersComponent implements OnInit {
     if (this.selected_i == -1 || this.selected_j == -1){
       this.onStartMove(i, j);
     } else if (i == this.selected_i && j == this.selected_j){
-      i != this.selected_i;
-      j != this.selected_j;
+      this.selected_i = -1;
+      this.selected_j = -1;
     } else {
       this.onCompleteMove(i, j);
     }
