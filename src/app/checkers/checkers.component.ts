@@ -115,22 +115,25 @@ export class CheckersComponent implements OnInit {
       this.canPieceMove;
     }
   }
- 
+//Copies, deletes old and resets 
   onCompleteMove(i:number, j:number){
     this.board[i][j] = this.board[this.selected_i][this.selected_j];
-
+    this.board[this.selected_i][this.selected_j] = this.EMPTY_CELL;
+    this.selected_i = -1;
+    this.selected_j = -1;
+    this.nextPlayer();
   }
-//onCompleteMove we want to 
-//   _choose a destination
-// X _transfer player object to new destination/clone new object of same player and place                        
-// X _delete past position player object/delete old object
 
   onClickedCell(i:number, j:number){
     if (this.selected_i == -1 || this.selected_j == -1){
       this.onStartMove(i, j);
+    } else if (i == this.selected_i && j == this.selected_j){
+      i != this.selected_i;
+      j != this.selected_j;
     } else {
       this.onCompleteMove(i, j);
     }
+    return;
   }
 
 // css styling
@@ -144,7 +147,7 @@ export class CheckersComponent implements OnInit {
 
 // css styling
   isValidMove(i:number, j:number): boolean {
-    return false;
+      return false;
   }
 
 
@@ -158,14 +161,11 @@ export class CheckersComponent implements OnInit {
 // }
 
 // possibleMoves() {
-//   if (inBounds && playerTurn == PLAYER_RED){
-//     check top left (numRows-1, numCols-1)
-//     check top right (numRows-1, numCols+1)
-//   }
-//   if (inBounds && playerTurn == PLAYER_BLACK){
-//     check bottom left (numRows+1, numCols-1)
-//     check bottom right (numRows+1, numCols+1)
-//   }
+//  if ((this.numRows-1, this.numCols-1) && this.PLAYER_RED) {
+//    ((this.numRows-1, this.numCols+1) && this.PLAYER_RED),
+//    ((this.numRows+1, this.numCols-1) && this.PLAYER_BLACK),
+//    ((this.numRows+1, this.numCols+1) && this.PLAYER_BLACK)
+// }
 // }
   
   ngOnInit(): void {

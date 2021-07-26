@@ -7,7 +7,7 @@
 
   <table id="board" class="board">
     <tr *ngFor="let row of board; let i = index">
-      <td *ngFor="let cell of row; let j = index" class="cell" (click)="onStartMove(i, j)"
+      <td *ngFor="let cell of row; let j = index" class="cell" (click)="onClickedCell(i, j)"
         [class]="{selected: isSelected(i, j), validMove: isValidMove(i, j),
           clearCursor: playerPiece(board[i][j]) != activePlayer}">
         <span *ngIf="board[i][j] != EMPTY_CELL">
