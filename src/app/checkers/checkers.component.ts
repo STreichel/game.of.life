@@ -115,28 +115,35 @@ export class CheckersComponent implements OnInit {
       this.canPieceMove;
     }
   }
-//Copies, deletes old and resets 
+
   onCompleteMove(i:number, j:number){
+// Copies piece selected to selected destination
     this.board[i][j] = this.board[this.selected_i][this.selected_j];
+// Clears original selected cell/no piece now
     this.board[this.selected_i][this.selected_j] = this.EMPTY_CELL;
+// Unselects original piece/cell
     this.selected_i = -1;
     this.selected_j = -1;
+// Move to next player
     this.nextPlayer();
   }
 
   onClickedCell(i:number, j:number){
+// if this piece is unselected, we can startMove
     if (this.selected_i == -1 || this.selected_j == -1){
       this.onStartMove(i, j);
+// unselect piece if clicked twice, clear your "click"
     } else if (i == this.selected_i && j == this.selected_j){
       this.selected_i = -1;
       this.selected_j = -1;
+// copy, delete, unselect and move to nextPlayer
     } else {
       this.onCompleteMove(i, j);
     }
     return;
   }
 
-// css styling
+// css styling for selecting a piece
   isSelected(i:number, j:number): boolean {
     if(i == this.selected_i && j == this.selected_j){
     return true;
@@ -145,7 +152,7 @@ export class CheckersComponent implements OnInit {
     }
   }
 
-// css styling
+// css styling for highlighting possible moves
   isValidMove(i:number, j:number): boolean {
       return false;
   }
