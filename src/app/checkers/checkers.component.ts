@@ -52,7 +52,7 @@ export class CheckersComponent implements OnInit {
 
   newGame(){
     this.board = this.createBoard();
-// Black pieces starting place
+          // Black pieces starting place
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 8; j++) {
         if ((i + j) % 2 == 1) {
@@ -60,7 +60,7 @@ export class CheckersComponent implements OnInit {
         }
       }
     }
-// Red pieces starting place
+          // Red pieces starting place
     for (let i = 5; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
         if ((i + j) % 2 == 1) {
@@ -109,6 +109,7 @@ export class CheckersComponent implements OnInit {
   }
 
   onStartMove(i:number, j:number){
+          // new variables to save new piece to  
     this.selected_i = i;
     this.selected_j = j;
     if (this.activePlayer == this.playerPiece(this.board[i][j])){
@@ -117,33 +118,33 @@ export class CheckersComponent implements OnInit {
   }
 
   onCompleteMove(i:number, j:number){
-// Copies piece selected to selected destination
+          // Copies piece selected to selected destination
     this.board[i][j] = this.board[this.selected_i][this.selected_j];
-// Clears original selected cell/no piece now
+          // Clears original selected cell/no piece now
     this.board[this.selected_i][this.selected_j] = this.EMPTY_CELL;
-// Unselects original piece/cell
+          // Unselects original piece/cell
     this.selected_i = -1;
     this.selected_j = -1;
-// Move to next player
+          // Move to next player
     this.nextPlayer();
   }
 
   onClickedCell(i:number, j:number){
-// if this piece is unselected, we can startMove
+          // if this piece is unselected, we can startMove
     if (this.selected_i == -1 || this.selected_j == -1){
       this.onStartMove(i, j);
-// unselect piece if clicked twice, clear your "click"
+          // unselect piece if clicked twice, clear your "click"
     } else if (i == this.selected_i && j == this.selected_j){
       this.selected_i = -1;
       this.selected_j = -1;
-// copy, delete, unselect and move to nextPlayer
+          // copy, delete, unselect and move to nextPlayer
     } else {
       this.onCompleteMove(i, j);
     }
     return;
   }
 
-// css styling for selecting a piece
+          // checking to see if a cell is selected ; css styling
   isSelected(i:number, j:number): boolean {
     if(i == this.selected_i && j == this.selected_j){
     return true;
@@ -152,29 +153,45 @@ export class CheckersComponent implements OnInit {
     }
   }
 
-// css styling for highlighting possible moves
-  isValidMove(i:number, j:number): boolean {
+          // checking to make sure (i, j) is within board constructed/ on true location
+  isInBounds(i:number, j:number): boolean {
+    if (i < 0 || i >= this.numRows || j < 0 || j >= this.numCols) {
       return false;
+    } else {
+      return true;
+    }
   }
 
+          // check to see if the cell is occupied or empty
+  isOccupied(i:number, j:number): boolean {
+    if (this.board[this.selected_i][this.selected_j] == this.EMPTY_CELL){
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-// inBounds() {
-//   if (this.numRows < 8 && this.numRows > -1 && 
-//     this.numCols < 8 && this.numCols > -1){
-//      return this.board[i][j];
-//   } else {
-//     return false;
-//     }
-// }
+          // css styling for checking and highlighting all possible valid moves
+  isValidMove(i:number, j:number): boolean {
+          // if (i, j) is not a true location on the board return false
+    if (!this.isInBounds(i, j)){
+      return false;
+    }
+          // check if this piece captures another piece
+          // and piece occupying must not be same color of current player ; check for jump
 
-// possibleMoves() {
-//  if ((this.numRows-1, this.numCols-1) && this.PLAYER_RED) {
-//    ((this.numRows-1, this.numCols+1) && this.PLAYER_RED),
-//    ((this.numRows+1, this.numCols-1) && this.PLAYER_BLACK),
-//    ((this.numRows+1, this.numCols+1) && this.PLAYER_BLACK)
-// }
-// }
-  
+          // if delta in column or row index is not equal to 1 return false
+    if (Math.abs(i - this.selected_i) || Math.abs(j - this.selected_j) != 1) {
+      return false;
+    }
+          // if there's another piece at (i, j) return false
+    if (this.playerPiece[this.selected_i][this.selected_j] == this.isOccupied(i, j)){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   ngOnInit(): void {
   }
 }
