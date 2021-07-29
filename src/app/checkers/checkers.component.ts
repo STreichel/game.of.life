@@ -104,20 +104,56 @@ export class CheckersComponent implements OnInit {
     }
   }
 
-  canPieceMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {
+          // checking to make sure (i, j) is within board constructed/ on true location
+  isInBounds(i:number, j:number): boolean {
+    if (i < 0 || i >= this.numRows || j < 0 || j >= this.numCols) {
+      return false;
+    } else {
     return true;
+    }
   }
 
+          // check to see if the cell is occupied or empty
+  isOccupied(i:number, j:number): boolean {
+    if (this.board[i][j] == this.EMPTY_CELL){
+      return false;
+    } else {
+    return true;
+    }
+  }
+
+          // css styling for checking and highlighting all possible valid moves
+  isValidMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {
+          // if (i, j) is not a true location on the board return false
+    if (!this.isInBounds(from_i, from_j)){
+      return false;
+      }
+          // check if this piece captures another piece
+          // and piece occupying must not be same color of current player ; check for jump
+  
+          // if delta in column or row index is not equal to 1 return false
+    if (Math.abs(to_i - from_i) != 1 || Math.abs(to_j - from_j) != 1) {
+      return false;
+    }
+          // if there's another piece at (i, j) return false
+    if (this.isOccupied(to_i, to_j)){
+      return false;
+    } else {
+    return true;
+    }
+  }
+  
   onStartMove(i:number, j:number){
           // new variables to save new piece to  
     this.selected_i = i;
     this.selected_j = j;
     if (this.activePlayer == this.playerPiece(this.board[i][j])){
-      this.canPieceMove;
+      this.isValidMove(this.selected_i, this.selected_j, i, j);
     }
   }
 
   onCompleteMove(i:number, j:number){
+    if (this.isValidMove(this.selected_i, this.selected_j, i, j)){
           // Copies piece selected to selected destination
     this.board[i][j] = this.board[this.selected_i][this.selected_j];
           // Clears original selected cell/no piece now
@@ -127,7 +163,8 @@ export class CheckersComponent implements OnInit {
     this.selected_j = -1;
           // Move to next player
     this.nextPlayer();
-  }
+    }
+  }  
 
   onClickedCell(i:number, j:number){
           // if this piece is unselected, we can startMove
@@ -150,45 +187,6 @@ export class CheckersComponent implements OnInit {
     return true;
     } else {
       return false;
-    }
-  }
-
-          // checking to make sure (i, j) is within board constructed/ on true location
-  isInBounds(i:number, j:number): boolean {
-    if (i < 0 || i >= this.numRows || j < 0 || j >= this.numCols) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-          // check to see if the cell is occupied or empty
-  isOccupied(i:number, j:number): boolean {
-    if (this.board[this.selected_i][this.selected_j] == this.EMPTY_CELL){
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-          // css styling for checking and highlighting all possible valid moves
-  isValidMove(i:number, j:number): boolean {
-          // if (i, j) is not a true location on the board return false
-    if (!this.isInBounds(i, j)){
-      return false;
-    }
-          // check if this piece captures another piece
-          // and piece occupying must not be same color of current player ; check for jump
-
-          // if delta in column or row index is not equal to 1 return false
-    if (Math.abs(i - this.selected_i) || Math.abs(j - this.selected_j) != 1) {
-      return false;
-    }
-          // if there's another piece at (i, j) return false
-    if (this.playerPiece[this.selected_i][this.selected_j] == this.isOccupied(i, j)){
-      return false;
-    } else {
-      return true;
     }
   }
 
