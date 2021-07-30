@@ -68,6 +68,7 @@ export class CheckersComponent implements OnInit {
         }
       }
     }
+    this.activePlayer = this.PLAYER_RED;
     return this.board;
   }
 
@@ -122,15 +123,32 @@ export class CheckersComponent implements OnInit {
     }
   }
 
-// canJump(from_i:number, from_j:number, to_i:number, to_j:number): boolean{
-//  if (this.isOccupied(to_i, to_j) && (this.activePlayer != this.playerPiece(this.board[from_i][from_j]))){
-//    if (Math.abs(to_i - from_i) == 2 || Math.abs(to_j - from_j) == 2){
-//      this.isOccupied(to_i, to_j) = this.EMPTY_CELL;
-//    }
-//    return true;
-//  }
-//    return false;
-//  }
+  canJump(from_i:number, from_j:number, to_i:number, to_j:number): boolean{
+          // if not an active player has a piece @ (i, j)
+    if (this.activePlayer != this.playerPiece(this.board[from_i][from_j])){
+      return false;
+    }
+          // didn't move the same number of squares in both directions
+    if (Math.abs(to_i - from_i) != 2 || Math.abs(to_j - from_j) != 2){
+      return false;
+    }
+          // if destination has piece, can't jump
+    if (this.isOccupied(to_i, to_j)) {
+      return false;
+    }
+          // new variables for inbetween startMove and completeMove
+    let mid_i = (from_i + to_i) / 2;
+    let mid_j = (from_j + to_j) / 2;
+          // if there is no piece between start and finish
+    if (this.board[mid_i][mid_j] == this.EMPTY_CELL){
+      return false;
+    }
+          // if the piece that is there is owned by current player ; cannot capture your own piece
+    if (this.playerPiece(this.board[mid_i][mid_j]) == this.activePlayer){
+     return false;
+    }
+    return true;
+  }
 
           // css styling for checking and highlighting all possible valid moves
   isValidMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {
@@ -138,20 +156,22 @@ export class CheckersComponent implements OnInit {
     if (!this.isInBounds(from_i, from_j)){
       return false;
       }
-          // check for canJump
-
+          // check for jump
+  if (this.canJump(from_i, from_j, to_i, to_j)){
+    return true;
+  }
           // if delta in column or row index is not equal to 1 return false ; diagonal move, no jump
     if (Math.abs(to_i - from_i) != 1 || Math.abs(to_j - from_j) != 1) {
       return false;
     }
           // if there's another piece at (i, j) return false
     if (this.isOccupied(to_i, to_j)){
-      return false; 
+      return false;
     } else {
       return true;
     }
   }
-  
+
   onStartMove(i:number, j:number){
           // make sure the cell is occupied before selecting
     if (this.playerPiece(this.board[i][j]) != this.activePlayer){
@@ -165,7 +185,6 @@ export class CheckersComponent implements OnInit {
     }
   }
 
-
   onCompleteMove(i:number, j:number){
     if (this.isValidMove(this.selected_i, this.selected_j, i, j)){
           // Copies piece selected to selected destination
@@ -178,7 +197,7 @@ export class CheckersComponent implements OnInit {
           // Move to next player
     this.nextPlayer();
     }
-  }  
+  }
 
   onClickedCell(i:number, j:number){
           // if this piece is unselected, we can startMove
@@ -192,7 +211,6 @@ export class CheckersComponent implements OnInit {
     } else {
       this.onCompleteMove(i, j);
     }
-//    this.nextPlayer();
     return;
   }
 
