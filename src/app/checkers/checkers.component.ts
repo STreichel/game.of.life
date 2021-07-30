@@ -150,6 +150,10 @@ export class CheckersComponent implements OnInit {
     return true;
   }
 
+  canCapture(){
+    
+  }
+
           // css styling for checking and highlighting all possible valid moves
   isValidMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {
           // if (i, j) is not a true location on the board return false
@@ -186,6 +190,7 @@ export class CheckersComponent implements OnInit {
   }
 
   onCompleteMove(i:number, j:number){
+          // make sure move is valid
     if (this.isValidMove(this.selected_i, this.selected_j, i, j)){
           // Copies piece selected to selected destination
     this.board[i][j] = this.board[this.selected_i][this.selected_j];
@@ -194,12 +199,18 @@ export class CheckersComponent implements OnInit {
           // Unselects original piece/cell
     this.selected_i = -1;
     this.selected_j = -1;
+          // delete icon if jumped over
+    let mid_i = (this.selected_i + i) / 2;
+    let mid_j = (this.selected_j + j) / 2;
+    if (Math.abs(this.selected_i - i) == 2 || Math.abs(this.selected_j - j) == 2) {
+      this.board[mid_i][mid_j] = this.EMPTY_CELL;
+    }
           // Move to next player
     this.nextPlayer();
     }
   }
 
-  onClickedCell(i:number, j:number){
+  onClickedCell(i:number, j:number, from_i:number, from_j:number, to_i:number, to_j:number){
           // if this piece is unselected, we can startMove
     if (this.selected_i == -1 || this.selected_j == -1){
       this.onStartMove(i, j);
