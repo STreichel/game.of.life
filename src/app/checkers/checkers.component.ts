@@ -196,15 +196,15 @@ export class CheckersComponent implements OnInit {
     this.board[i][j] = this.board[this.selected_i][this.selected_j];
           // Clears original selected cell/no piece now
     this.board[this.selected_i][this.selected_j] = this.EMPTY_CELL;
-          // Unselects original piece/cell
-    this.selected_i = -1;
-    this.selected_j = -1;
           // delete icon if jumped over
     let mid_i = (this.selected_i + i) / 2;
     let mid_j = (this.selected_j + j) / 2;
     if (Math.abs(this.selected_i - i) == 2 || Math.abs(this.selected_j - j) == 2) {
       this.board[mid_i][mid_j] = this.EMPTY_CELL;
     }
+          // Unselects original piece/cell
+    this.selected_i = -1;
+    this.selected_j = -1;
           // Move to next player
     this.nextPlayer();
     }
