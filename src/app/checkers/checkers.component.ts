@@ -146,30 +146,25 @@ export class CheckersComponent implements OnInit {
     }
           // if there's another piece at (i, j) return false
     if (this.isOccupied(to_i, to_j)){
-      return false;
-    }  
-            // want to not have valid onStartMove on empty cell but here it already has a piece selected
-    if (!this.isOccupied(from_i, from_j)){ 
-      return false;
+      return false; 
     } else {
       return true;
     }
   }
   
   onStartMove(i:number, j:number){
-          // new variables to save new piece to
+          // make sure the cell is occupied before selecting
+    if (this.playerPiece(this.board[i][j]) != this.activePlayer){
+      return;
+  }
+         // new variables to save new piece to
     this.selected_i = i;
     this.selected_j = j;
     if (this.activePlayer == this.playerPiece(this.board[i][j])){
       this.isValidMove(this.selected_i, this.selected_j, i, j);
     }
-//    if (!this.isOccupied){
-//      !this.isValidMove(this.selected_i, this.selected_j, i, j);
-//    }
-//    if (this.board[i][j] == this.playerPiece(this.board[i][j])){
-//      this.isValidMove(this.selected_i, this.selected_j, i, j)
-//    }
   }
+
 
   onCompleteMove(i:number, j:number){
     if (this.isValidMove(this.selected_i, this.selected_j, i, j)){
