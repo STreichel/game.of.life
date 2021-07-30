@@ -122,34 +122,53 @@ export class CheckersComponent implements OnInit {
     }
   }
 
+// canJump(from_i:number, from_j:number, to_i:number, to_j:number): boolean{
+//  if (this.isOccupied(to_i, to_j) && (this.activePlayer != this.playerPiece(this.board[from_i][from_j]))){
+//    if (Math.abs(to_i - from_i) == 2 || Math.abs(to_j - from_j) == 2){
+//      this.isOccupied(to_i, to_j) = this.EMPTY_CELL;
+//    }
+//    return true;
+//  }
+//    return false;
+//  }
+
           // css styling for checking and highlighting all possible valid moves
   isValidMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {
           // if (i, j) is not a true location on the board return false
     if (!this.isInBounds(from_i, from_j)){
       return false;
       }
-          // check if this piece captures another piece
-          // and piece occupying must not be same color of current player ; check for jump
-  
-          // if delta in column or row index is not equal to 1 return false
+          // check for canJump
+
+          // if delta in column or row index is not equal to 1 return false ; diagonal move, no jump
     if (Math.abs(to_i - from_i) != 1 || Math.abs(to_j - from_j) != 1) {
       return false;
     }
           // if there's another piece at (i, j) return false
     if (this.isOccupied(to_i, to_j)){
       return false;
+    }  
+            // want to not have valid onStartMove on empty cell but here it already has a piece selected
+    if (!this.isOccupied(from_i, from_j)){ 
+      return false;
     } else {
-    return true;
+      return true;
     }
   }
   
   onStartMove(i:number, j:number){
-          // new variables to save new piece to  
+          // new variables to save new piece to
     this.selected_i = i;
     this.selected_j = j;
     if (this.activePlayer == this.playerPiece(this.board[i][j])){
       this.isValidMove(this.selected_i, this.selected_j, i, j);
     }
+//    if (!this.isOccupied){
+//      !this.isValidMove(this.selected_i, this.selected_j, i, j);
+//    }
+//    if (this.board[i][j] == this.playerPiece(this.board[i][j])){
+//      this.isValidMove(this.selected_i, this.selected_j, i, j)
+//    }
   }
 
   onCompleteMove(i:number, j:number){
@@ -178,6 +197,7 @@ export class CheckersComponent implements OnInit {
     } else {
       this.onCompleteMove(i, j);
     }
+//    this.nextPlayer();
     return;
   }
 
