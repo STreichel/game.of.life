@@ -68,6 +68,8 @@ export class CheckersComponent implements OnInit {
         }
       }
     }
+    this.selected_i = -1;
+    this.selected_j = -1;
     this.activePlayer = this.PLAYER_RED;
     return this.board;
   }
@@ -87,6 +89,7 @@ export class CheckersComponent implements OnInit {
     }
     return this.faCrown;
   }
+
   iconClassForPiece(i: number, j: number): string {
     let player = this.playerPiece(this.board[i][j]);
     if (player == this.PLAYER_RED) {
@@ -149,21 +152,26 @@ export class CheckersComponent implements OnInit {
     }
     return true;
   }
-
-  canCapture(){
-    
-  }
-
+  
           // css styling for checking and highlighting all possible valid moves
-  isValidMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {
+  isValidMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {    
           // if (i, j) is not a true location on the board return false
     if (!this.isInBounds(from_i, from_j)){
       return false;
-      }
+    }
+          // check if icon is a red pawn or not and if it's moving down the board
+    let piece = this.board[from_i][from_j];
+    if (piece == this.RED_PAWN && to_i >= from_i){
+      return false;
+    }
+          // check if icon is a black pawn and if it's moving up the board
+    if (piece == this.BLACK_PAWN && to_i <= from_i){
+      return false;
+    }
           // check for jump
-  if (this.canJump(from_i, from_j, to_i, to_j)){
-    return true;
-  }
+    if (this.canJump(from_i, from_j, to_i, to_j)){
+      return true;
+    }
           // if delta in column or row index is not equal to 1 return false ; diagonal move, no jump
     if (Math.abs(to_i - from_i) != 1 || Math.abs(to_j - from_j) != 1) {
       return false;
@@ -210,7 +218,7 @@ export class CheckersComponent implements OnInit {
     }
   }
 
-  onClickedCell(i:number, j:number, from_i:number, from_j:number, to_i:number, to_j:number){
+  onClickedCell(i:number, j:number){
           // if this piece is unselected, we can startMove
     if (this.selected_i == -1 || this.selected_j == -1){
       this.onStartMove(i, j);

@@ -24,11 +24,13 @@
 
 .redPiece {
   color: rgb(2, 175, 80);
+  font-size:larger;
   
 }
 
 .blackPiece {
   color: black;
+  font-size:larger;
 }
 
 .selected {
