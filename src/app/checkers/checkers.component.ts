@@ -204,6 +204,14 @@ export class CheckersComponent implements OnInit {
     this.board[i][j] = this.board[this.selected_i][this.selected_j];
           // Clears original selected cell/no piece now
     this.board[this.selected_i][this.selected_j] = this.EMPTY_CELL;
+          // if this new destination is row 0 and icon is RED_PAWN, change icon to RED_KING/crown
+    if (this.board[i][j] == this.RED_PAWN && (i == 0)){
+      this.board[i][j] = this.RED_KING;
+    }
+          // if this new destination is row 8 and icon is BLACK_PAWN, change icon to BLACK_KING/crown
+    if (this.board[i][j] == this.BLACK_PAWN && (i == this.board.length - 1)){
+      this.board[i][j] = this.BLACK_KING
+    }
           // delete icon if jumped over
     let mid_i = (this.selected_i + i) / 2;
     let mid_j = (this.selected_j + j) / 2;
