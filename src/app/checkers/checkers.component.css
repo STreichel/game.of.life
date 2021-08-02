@@ -29,12 +29,12 @@
 }
 
 .blackPiece {
-  color: black;
+  color: rgb(153, 92, 57);
   font-size:larger;
 }
 
 .selected {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(184, 184, 91);
 }
 
 .validMove {

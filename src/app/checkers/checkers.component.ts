@@ -2,13 +2,30 @@ import { Component, OnInit } from '@angular/core';
 
 import { faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
 
+class MoveDetails{
+  from_i:number;
+  from_j:number;
+  to_i:number;
+  to_j:number;
+  capturedPiece:string;
+
+  constructor(from_i:number, from_j:number, to_i:number, to_j:number, capturedPiece:string){
+    this.from_i = from_i;
+    this.from_j = from_j;
+    this.to_i = to_i;
+    this.to_j = to_j;
+    this.capturedPiece = "";
+  }
+}
+
 @Component({
   selector: 'app-checkers',
   templateUrl: './checkers.component.html',
   styleUrls: ['./checkers.component.css']
 })
+
 export class CheckersComponent implements OnInit {
-  
+
   faCrown = faCrown;
   faYingYang = faYinYang;
 
@@ -16,7 +33,7 @@ export class CheckersComponent implements OnInit {
 
   numRows: number = 8;
   numCols: number = 8;
-  
+
   EMPTY_CELL='';
 
   RED_PAWN='r';
@@ -35,6 +52,9 @@ export class CheckersComponent implements OnInit {
   selected_i: number = -1;
   selected_j: number = -1;
 
+  moveHistory: MoveDetails[] = [];
+  moveCount = 0;
+
   constructor() {
     this.newGame();
   }
@@ -51,6 +71,7 @@ export class CheckersComponent implements OnInit {
   };
 
   newGame(){
+    this.clearMoveHistory();
     this.board = this.createBoard();
           // Black pieces starting place
     for (let i = 0; i < 3; i++) {
@@ -72,6 +93,41 @@ export class CheckersComponent implements OnInit {
     this.selected_j = -1;
     this.activePlayer = this.PLAYER_RED;
     return this.board;
+  }
+
+  addMove(item: any){
+    this.moveHistory[this.moveCount] = item;
+    this.moveCount ++;    
+  }
+
+  undoLastMove(){
+    if (this.isEmptyStack()){
+      return null;
+    }
+    const lastItem = this.lastMove();
+    delete this.moveHistory[this.moveCount -1];
+    this.moveCount --;
+    return lastItem;
+  }
+
+  lastMove(){
+    if (this.isEmptyStack()){
+      return null;
+    }
+    return this.moveHistory[this.moveCount -1]
+  }
+
+  stackSize(){
+    return this.moveCount;
+  }
+
+  isEmptyStack(){
+    return this.stackSize() ? false : true;
+  }
+
+  clearMoveHistory(){
+    this.moveHistory = [];
+    this.moveCount = 0;
   }
 
   playerPiece(piece: string) {
@@ -199,31 +255,36 @@ export class CheckersComponent implements OnInit {
 
   onCompleteMove(i:number, j:number){
           // make sure move is valid
-    if (this.isValidMove(this.selected_i, this.selected_j, i, j)){
+    if (!this.isValidMove(this.selected_i, this.selected_j, i, j)){
+      return;
+    }
           // Copies piece selected to selected destination
-    this.board[i][j] = this.board[this.selected_i][this.selected_j];
+      this.board[i][j] = this.board[this.selected_i][this.selected_j];
           // Clears original selected cell/no piece now
-    this.board[this.selected_i][this.selected_j] = this.EMPTY_CELL;
+      this.board[this.selected_i][this.selected_j] = this.EMPTY_CELL;
           // if this new destination is row 0 and icon is RED_PAWN, change icon to RED_KING/crown
-    if (this.board[i][j] == this.RED_PAWN && (i == 0)){
-      this.board[i][j] = this.RED_KING;
-    }
+      if (this.board[i][j] == this.RED_PAWN && (i == 0)){
+        this.board[i][j] = this.RED_KING;
+      }
           // if this new destination is row 8 and icon is BLACK_PAWN, change icon to BLACK_KING/crown
-    if (this.board[i][j] == this.BLACK_PAWN && (i == this.board.length - 1)){
-      this.board[i][j] = this.BLACK_KING
-    }
+      if (this.board[i][j] == this.BLACK_PAWN && (i == this.board.length - 1)){
+        this.board[i][j] = this.BLACK_KING
+      }
           // delete icon if jumped over
-    let mid_i = (this.selected_i + i) / 2;
-    let mid_j = (this.selected_j + j) / 2;
-    if (Math.abs(this.selected_i - i) == 2 || Math.abs(this.selected_j - j) == 2) {
-      this.board[mid_i][mid_j] = this.EMPTY_CELL;
-    }
+      let capturedPiece = this.EMPTY_CELL;
+      let mid_i = (this.selected_i + i) / 2;
+      let mid_j = (this.selected_j + j) / 2;
+      if (Math.abs(this.selected_i - i) == 2 || Math.abs(this.selected_j - j) == 2) {
+        capturedPiece = this.board[mid_i][mid_j];
+        this.board[mid_i][mid_j] = this.EMPTY_CELL;
+      }
           // Unselects original piece/cell
-    this.selected_i = -1;
-    this.selected_j = -1;
+      this.selected_i = -1;
+      this.selected_j = -1;
           // Move to next player
-    this.nextPlayer();
-    }
+      this.nextPlayer();
+          // stores previous play in stack
+      this.moveHistory[this.moveCount++] = new MoveDetails(this.selected_i, this.selected_j, i, j, capturedPiece);
   }
 
   onClickedCell(i:number, j:number){
