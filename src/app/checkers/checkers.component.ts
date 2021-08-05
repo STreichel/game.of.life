@@ -14,7 +14,11 @@ class MoveDetails{
     this.from_j = from_j;
     this.to_i = to_i;
     this.to_j = to_j;
-    this.capturedPiece = "";
+    this.capturedPiece = capturedPiece;
+  }
+
+  toString(): string {
+    return JSON.stringify(this);
   }
 }
 
@@ -94,37 +98,47 @@ export class CheckersComponent implements OnInit {
     this.activePlayer = this.PLAYER_RED;
     return this.board;
   }
-
+          // add each move in stack
   addMove(item: any){
     this.moveHistory[this.moveCount] = item;
     this.moveCount ++;    
   }
-
   undoLastMove(){
-    if (this.isEmptyStack()){
-      return null;
+    if (this.moveCount == 0) {
+      return;
     }
-    const lastItem = this.lastMove();
+          // pop the most recent move onto the stack
+    let move = this.lastMove();
     delete this.moveHistory[this.moveCount -1];
     this.moveCount --;
-    return lastItem;
+    this.moveHistory.length = this.moveCount;
+          // undo board
+    this.board[move.from_i][move.from_j] = this.board[move.to_i][move.to_j];
+    this.board[move.to_i][move.to_j] = this.EMPTY_CELL;
+          // un-delete previous captured piece if there was one
+    let mid_i = (move.from_i + move.to_i) / 2;
+    let mid_j = (move.from_j + move.to_j) / 2;
+    if (Math.abs(move.from_i - move.to_i) == 2 || Math.abs(move.from_j - move.to_j) == 2){
+      this.board[mid_i][mid_j] = move.capturedPiece;
+    }
   }
-
+  
+          // stores each move in a first in, last out stack
   lastMove(){
-    if (this.isEmptyStack()){
+    if (this.isMoveHistoryEmpty()){
       return null;
     }
     return this.moveHistory[this.moveCount -1]
   }
-
+          // counts the stacks levels that have been saved
   stackSize(){
     return this.moveCount;
   }
-
-  isEmptyStack(){
+          // checks to see if the stack size is zero
+  isMoveHistoryEmpty(){
     return this.stackSize() ? false : true;
   }
-
+          // clears the whole stack history and resets to zero
   clearMoveHistory(){
     this.moveHistory = [];
     this.moveCount = 0;
@@ -259,32 +273,33 @@ export class CheckersComponent implements OnInit {
       return;
     }
           // Copies piece selected to selected destination
-      this.board[i][j] = this.board[this.selected_i][this.selected_j];
+    this.board[i][j] = this.board[this.selected_i][this.selected_j];
           // Clears original selected cell/no piece now
-      this.board[this.selected_i][this.selected_j] = this.EMPTY_CELL;
+    this.board[this.selected_i][this.selected_j] = this.EMPTY_CELL;
           // if this new destination is row 0 and icon is RED_PAWN, change icon to RED_KING/crown
-      if (this.board[i][j] == this.RED_PAWN && (i == 0)){
-        this.board[i][j] = this.RED_KING;
-      }
+    if (this.board[i][j] == this.RED_PAWN && (i == 0)){
+      this.board[i][j] = this.RED_KING;
+    }
           // if this new destination is row 8 and icon is BLACK_PAWN, change icon to BLACK_KING/crown
-      if (this.board[i][j] == this.BLACK_PAWN && (i == this.board.length - 1)){
-        this.board[i][j] = this.BLACK_KING
-      }
+    if (this.board[i][j] == this.BLACK_PAWN && (i == this.board.length - 1)){
+      this.board[i][j] = this.BLACK_KING
+    }
           // delete icon if jumped over
-      let capturedPiece = this.EMPTY_CELL;
-      let mid_i = (this.selected_i + i) / 2;
-      let mid_j = (this.selected_j + j) / 2;
-      if (Math.abs(this.selected_i - i) == 2 || Math.abs(this.selected_j - j) == 2) {
-        capturedPiece = this.board[mid_i][mid_j];
-        this.board[mid_i][mid_j] = this.EMPTY_CELL;
-      }
-          // Unselects original piece/cell
-      this.selected_i = -1;
-      this.selected_j = -1;
-          // Move to next player
-      this.nextPlayer();
+    let capturedPiece = this.EMPTY_CELL;
+    let mid_i = (this.selected_i + i) / 2;
+    let mid_j = (this.selected_j + j) / 2;
+    if (Math.abs(this.selected_i - i) == 2 || Math.abs(this.selected_j - j) == 2) {
+      console.log("capturing piece from: " + mid_i + ", " + mid_j + " piece=" + this.board[mid_i][mid_j])
+      capturedPiece = this.board[mid_i][mid_j];
+      this.board[mid_i][mid_j] = this.EMPTY_CELL;
+    }
           // stores previous play in stack
-      this.moveHistory[this.moveCount++] = new MoveDetails(this.selected_i, this.selected_j, i, j, capturedPiece);
+    this.moveHistory[this.moveCount++] = new MoveDetails(this.selected_i, this.selected_j, i, j, capturedPiece);
+          // Move to next player
+    this.nextPlayer();
+          // Unselects original piece/cell
+    this.selected_i = -1;
+    this.selected_j = -1;
   }
 
   onClickedCell(i:number, j:number){
