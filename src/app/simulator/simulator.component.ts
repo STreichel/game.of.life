@@ -87,7 +87,7 @@ export class SimulatorComponent implements OnInit {
       }
     }
     this.grid = newGrid;
-  }    
+  }
 
   isAlive(i: number, j: number): boolean {
     if (i < 0 || i >= this.numRows || j < 0 || j >= this.numCols) {

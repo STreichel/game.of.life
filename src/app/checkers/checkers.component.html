@@ -5,7 +5,6 @@
   <button (click)="newGame()">New Game</button>
   </mat-menu>
 
-  <div *ngFor="let move of moveHistory">{{ move.toString() }}</div>
   <button (click)="undoLastMove()">Undo Last Move</button>
 
   <table id="board" class="board">

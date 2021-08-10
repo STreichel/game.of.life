@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
+import { type } from 'os';
 
 class MoveDetails{
   from_i:number;
@@ -21,6 +22,14 @@ class MoveDetails{
     return JSON.stringify(this);
   }
 }
+
+enum MoveType {
+  NO_MOVE = 'NO_MOVE',
+  VALID_MOVE = 'VALID_MOVE',
+  JUMP_MOVE = 'JUMP_MOVE',
+};
+
+let playerMoveType = MoveType.JUMP_MOVE;
 
 @Component({
   selector: 'app-checkers',
@@ -45,9 +54,9 @@ export class CheckersComponent implements OnInit {
   BLACK_PAWN="b";
   BLACK_KING='B';
 
-  PLAYER_NONE=0;
-  PLAYER_RED=1;
-  PLAYER_BLACK=2;
+  PLAYER_NONE = 0;
+  PLAYER_RED = 1;
+  PLAYER_BLACK = 2;
 
   activePlayer = this.PLAYER_RED;
 
@@ -222,7 +231,17 @@ export class CheckersComponent implements OnInit {
     }
     return true;
   }
-  
+
+  hasMove(){
+    let playerMoveType = new Array<string[]>(this.numRows);
+    for (let i = 0; i < this.board.length; i++) {
+      playerMoveType[i] = new Array<string>(this.numCols);
+      for (let j = 0; j < this.board[i].length; j++) {
+      }
+    }
+    this.MoveType = playerMoveType;
+  }
+
           // css styling for checking and highlighting all possible valid moves
   isValidMove(from_i: number, from_j: number, to_i: number, to_j: number): boolean {    
           // if (i, j) is not a true location on the board return false
@@ -289,10 +308,9 @@ export class CheckersComponent implements OnInit {
     let mid_i = (this.selected_i + i) / 2;
     let mid_j = (this.selected_j + j) / 2;
     if (Math.abs(this.selected_i - i) == 2 || Math.abs(this.selected_j - j) == 2) {
-      console.log("capturing piece from: " + mid_i + ", " + mid_j + " piece=" + this.board[mid_i][mid_j])
       capturedPiece = this.board[mid_i][mid_j];
       this.board[mid_i][mid_j] = this.EMPTY_CELL;
-    }
+    }      
           // stores previous play in stack
     this.moveHistory[this.moveCount++] = new MoveDetails(this.selected_i, this.selected_j, i, j, capturedPiece);
           // Move to next player
