@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
-import { type } from 'os';
 
 class MoveDetails{
   from_i:number;
@@ -29,7 +28,8 @@ enum MoveType {
   JUMP_MOVE = 'JUMP_MOVE',
 };
 
-let playerMoveType = MoveType.JUMP_MOVE;
+let hasMove = new Array<Array<MoveType>>();
+hasMove [''] = MoveType.JUMP_MOVE;
 
 @Component({
   selector: 'app-checkers',
@@ -67,6 +67,22 @@ export class CheckersComponent implements OnInit {
 
   moveHistory: MoveDetails[] = [];
   moveCount = 0;
+
+  JUMP_DX(p: number): number {
+    return p < 2 ? -2 : 2;
+  }
+
+  JUMP_DY(p: number): number {
+    return (p == 0) || (p == 1) ? -2 : 2;
+  }
+
+  MOVE_DX(p: number): number {
+    return p < 2 ? -1 : 1;
+  }
+
+  MOVE_DY(p: number): number {
+    return (p == 0) || (p == 1) ? -1 : 1;
+  }
 
   constructor() {
     this.newGame();
@@ -232,14 +248,31 @@ export class CheckersComponent implements OnInit {
     return true;
   }
 
+          // new array parallel to board, to check over entire board for MoveType(s)
   hasMove(){
-    let playerMoveType = new Array<string[]>(this.numRows);
-    for (let i = 0; i < this.board.length; i++) {
-      playerMoveType[i] = new Array<string>(this.numCols);
-      for (let j = 0; j < this.board[i].length; j++) {
+    let newHasMove = new Array<Array<MoveType>>(this.numRows);
+    for (let i = 0; i < this.numRows; i++) {
+      newHasMove[i] = new Array<MoveType>(this.numCols);
+      for (let j = 0; j < this.numCols; j++) {
+      }
+      newHasMove;
+    }
+    hasMove[''] = newHasMove;
+  }
+
+  getMoveKindForCell(i: number, j: number){
+    let moveType = MoveType.NO_MOVE;
+          // k is index, check all [0, 1, 2, 3]
+    for (let k = 0; k < 4; ++k){
+          // check for jump moves
+      if (this.isValidMove(i, j, i + this.JUMP_DX(k), j + this.JUMP_DY(k))) {
+        moveType = MoveType.JUMP_MOVE;
+          // check for regular non jump moves
+      } else if (this.isValidMove(i, j, i + this.MOVE_DX(k), j + this.MOVE_DY(k))) {
+        moveType = MoveType.VALID_MOVE;
       }
     }
-    this.MoveType = playerMoveType;
+    return moveType;
   }
 
           // css styling for checking and highlighting all possible valid moves
@@ -313,6 +346,10 @@ export class CheckersComponent implements OnInit {
     }      
           // stores previous play in stack
     this.moveHistory[this.moveCount++] = new MoveDetails(this.selected_i, this.selected_j, i, j, capturedPiece);
+
+          // check if this.activePlayer hasMove, if not continue
+          // if player still hasMove return to top of onCompleteMove
+
           // Move to next player
     this.nextPlayer();
           // Unselects original piece/cell
