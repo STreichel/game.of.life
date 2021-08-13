@@ -28,9 +28,6 @@ enum MoveType {
   JUMP_MOVE = 'JUMP_MOVE',
 };
 
-let hasMove = new Array<Array<MoveType>>();
-hasMove [''] = MoveType.JUMP_MOVE;
-
 @Component({
   selector: 'app-checkers',
   templateUrl: './checkers.component.html',
@@ -67,6 +64,8 @@ export class CheckersComponent implements OnInit {
 
   moveHistory: MoveDetails[] = [];
   moveCount = 0;
+
+  moveType = new Array<Array<MoveType>>();
 
   JUMP_DX(p: number): number {
     return p < 2 ? -2 : 2;
@@ -249,30 +248,30 @@ export class CheckersComponent implements OnInit {
   }
 
           // new array parallel to board, to check over entire board for MoveType(s)
-  hasMove(){
-    let newHasMove = new Array<Array<MoveType>>(this.numRows);
-    for (let i = 0; i < this.numRows; i++) {
-      newHasMove[i] = new Array<MoveType>(this.numCols);
-      for (let j = 0; j < this.numCols; j++) {
-      }
-      newHasMove;
-    }
-    hasMove[''] = newHasMove;
-  }
-
   getMoveKindForCell(i: number, j: number){
     let moveType = MoveType.NO_MOVE;
           // k is index, check all [0, 1, 2, 3]
     for (let k = 0; k < 4; ++k){
           // check for jump moves
       if (this.isValidMove(i, j, i + this.JUMP_DX(k), j + this.JUMP_DY(k))) {
-        moveType = MoveType.JUMP_MOVE;
+        return moveType = MoveType.JUMP_MOVE;
           // check for regular non jump moves
       } else if (this.isValidMove(i, j, i + this.MOVE_DX(k), j + this.MOVE_DY(k))) {
         moveType = MoveType.VALID_MOVE;
       }
     }
     return moveType;
+  }
+
+  initializeMoveTypeArray(){
+    let newMoveType = new Array<Array<MoveType>>(this.numRows);
+    for (let i = 0; i < this.numRows; i++) {
+      newMoveType[i] = new Array<MoveType>(this.numCols);
+      for (let j = 0; j < this.numCols; j++) {
+        newMoveType[i][j] = this.getMoveKindForCell(i, j);
+      }
+    }
+    this.moveType = newMoveType;
   }
 
           // css styling for checking and highlighting all possible valid moves
@@ -307,6 +306,7 @@ export class CheckersComponent implements OnInit {
   }
 
   onStartMove(i:number, j:number){
+//    this.initializeMoveTypeArray();
           // make sure the cell is occupied before selecting
     if (this.playerPiece(this.board[i][j]) != this.activePlayer){
       return;

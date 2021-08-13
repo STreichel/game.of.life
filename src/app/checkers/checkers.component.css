@@ -41,10 +41,6 @@
   background-color: rgb(32, 163, 6);
 }
 
-.hasJumpMove{
-  background-color: rgb(32, 163, 6);
-}
-
 .cell.clearCursor {
   cursor: default;
 }

@@ -11,7 +11,6 @@
     <tr *ngFor="let row of board; let i = index">
       <td *ngFor="let cell of row; let j = index" class="cell" (click)="onClickedCell(i, j)"
         [class]="{selected: isSelected(i, j), validMove: isValidMove(selected_i, selected_j, i, j),
-          hasJumpMove: moveType[i][j] == 'JUMP_MOVE',
           clearCursor: playerPiece(board[i][j]) != activePlayer}">
         <span *ngIf="board[i][j] != EMPTY_CELL">
           <fa-icon [icon]="iconForPiece(i, j)" [class]="iconClassForPiece(i, j)"></fa-icon>
