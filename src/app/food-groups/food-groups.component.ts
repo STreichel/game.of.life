@@ -5,10 +5,9 @@ import { FoodGroupsService } from '../food-groups.service';
 @Component({
   selector: 'app-food-groups',
   templateUrl: './food-groups.component.html',
-  styleUrls: ['./food-groups.component.css']
+  styleUrls: ['./food-groups.component.css'],
 })
 export class FoodGroupsComponent implements OnInit {
-  
   isleNum: FoodGroups[] = [];
 
   constructor(private foodGroupsService: FoodGroupsService) {}
@@ -16,8 +15,10 @@ export class FoodGroupsComponent implements OnInit {
   ngOnInit(): void {
     this.getIsleNum();
   }
- 
+
   getIsleNum(): void {
-    this.foodGroupsService.getIsleNum().subscribe(isleNum => this.isleNum = isleNum);
+    this.foodGroupsService
+      .getIsleNum()
+      .subscribe((isleNum) => (this.isleNum = isleNum));
   }
 }

@@ -1,7 +1,9 @@
 <h2>Most Used</h2>
 <div class="isleNum-menu">
-  <a *ngFor="let foodGroups of isleNum"
-    routerLink="/detail/{{foodGroups.id}}">
-    {{foodGroups.name}}
+  <a
+    *ngFor="let foodGroups of isleNum"
+    routerLink="/detail/{{ foodGroups.id }}"
+  >
+    {{ foodGroups.name }}
   </a>
 </div>

@@ -1,7 +1,6 @@
-
 .cell {
-  width:100px;
-  height:100px;
+  width: 100px;
+  height: 100px;
   border: 5px solid #702c79;
   background: #b99898;
   font-size: 46pt;
@@ -17,32 +16,31 @@
   text-align: center;
 }
 
-#board{
-  margin:auto;
+#board {
+  margin: auto;
 }
 
-.winnerCheck{
+.winnerCheck {
   background-color: #f5bf78;
-  max-width:40em;
-  margin:auto;
-  margin-top:2em;
+  max-width: 40em;
+  margin: auto;
+  margin-top: 2em;
 }
 
-.actions{
-  text-align:auto;
-  margin-left:30em;
-  margin-right:1.5em;
+.actions {
+  text-align: auto;
+  margin-left: 30em;
+  margin-right: 1.5em;
 }
 
-.winner{
-  text-align:center;
-  color:rgb(255, 0, 47);
+.winner {
+  text-align: center;
+  color: rgb(255, 0, 47);
   font-family: cursive;
-  font-size:1.5em;
-  max-height:.1em;
+  font-size: 1.5em;
+  max-height: 0.1em;
 }
 
-.header{
+.header {
   max-width: 10em;
 }
-

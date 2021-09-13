@@ -6,8 +6,13 @@
 
 <table id="board">
   <tr *ngFor="let row of board; let i = index">
-    <td *ngFor="let cell of row; let j = index" class="cell"
-      (click)="takeTurn(i, j)">{{board[i][j]}}</td>
+    <td
+      *ngFor="let cell of row; let j = index"
+      class="cell"
+      (click)="takeTurn(i, j)"
+    >
+      {{ board[i][j] }}
+    </td>
   </tr>
 </table>
 
@@ -15,16 +20,12 @@
   <mat-card-header class="header">
     <mat-card-title>Tic-Tac-Toe</mat-card-title>
   </mat-card-header>
-  <mat-card-content *ngIf = "winner != null" class="winner">
-    <div *ngIf = "winner == 'Draw'">Draw, no winner...</div>
-    <div *ngIf = "winner == player1">Player 1 Wins!</div>
-    <div *ngIf = "winner == player2">Player 2 Wins!</div>
+  <mat-card-content *ngIf="winner != null" class="winner">
+    <div *ngIf="winner == 'Draw'">Draw, no winner...</div>
+    <div *ngIf="winner == player1">Player 1 Wins!</div>
+    <div *ngIf="winner == player2">Player 2 Wins!</div>
   </mat-card-content>
   <mat-card-actions class="actions">
     <button mat-button (click)="StartNewGame()">Start New Game</button>
   </mat-card-actions>
 </mat-card>
-
-
-
-

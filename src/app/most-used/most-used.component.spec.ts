@@ -8,9 +8,8 @@ describe('MostUsedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MostUsedComponent ]
-    })
-    .compileComponents();
+      declarations: [MostUsedComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

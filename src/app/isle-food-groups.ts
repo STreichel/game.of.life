@@ -10,5 +10,5 @@ export const ISLES: FoodGroups[] = [
   { id: 7, name: 'Frozen Foods' },
   { id: 8, name: 'Liquor/Beer' },
   { id: 9, name: 'Household' },
-  { id: 10, name: 'Pharmacy' }
+  { id: 10, name: 'Pharmacy' },
 ];

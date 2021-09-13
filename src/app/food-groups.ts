@@ -1,4 +1,4 @@
 export interface FoodGroups {
-    id: number;
-    name: string;
-  }
+  id: number;
+  name: string;
+}

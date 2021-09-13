@@ -8,12 +8,12 @@ import { FoodGroupsDetailComponent } from './food-groups-detail/food-groups-deta
 const routes: Routes = [
   { path: 'isleNum', component: FoodGroupsComponent },
   { path: 'most-used', component: MostUsedComponent },
-  { path: '', redirectTo: '/most-used', pathMatch: 'full'},
-  { path: 'detail/:id', component: FoodGroupsDetailComponent},
+  { path: '', redirectTo: '/most-used', pathMatch: 'full' },
+  { path: 'detail/:id', component: FoodGroupsDetailComponent },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

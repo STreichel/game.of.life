@@ -1,20 +1,29 @@
-
 <button mat-button [matMenuTriggerFor]="menu">Checkers</button>
 
 <mat-menu #menu="matMenu">
   <button (click)="newGame()">New Game</button>
-  </mat-menu>
+</mat-menu>
 
-  <button (click)="undoLastMove()">Undo Last Move</button>
+<button (click)="undoLastMove()">Undo Last Move</button>
 
-  <table id="board" class="board">
-    <tr *ngFor="let row of board; let i = index">
-      <td *ngFor="let cell of row; let j = index" class="cell" (click)="onClickedCell(i, j)"
-        [class]="{selected: isSelected(i, j), validMove: isValidMove(selected_i, selected_j, i, j),
-          clearCursor: playerPiece(board[i][j]) != activePlayer}">
-        <span *ngIf="board[i][j] != EMPTY_CELL">
-          <fa-icon [icon]="iconForPiece(i, j)" [class]="iconClassForPiece(i, j)"></fa-icon>
-        </span>
-      </td>
-    </tr>
-  </table>
+<table id="board" class="board">
+  <tr *ngFor="let row of board; let i = index">
+    <td
+      *ngFor="let cell of row; let j = index"
+      class="cell"
+      (click)="onClickedCell(i, j)"
+      [class]="{
+        selected: isSelected(i, j),
+        validMove: isValidMove(selected_i, selected_j, i, j),
+        clearCursor: playerPiece(board[i][j]) != activePlayer
+      }"
+    >
+      <span *ngIf="board[i][j] != EMPTY_CELL">
+        <fa-icon
+          [icon]="iconForPiece(i, j)"
+          [class]="iconClassForPiece(i, j)"
+        ></fa-icon>
+      </span>
+    </td>
+  </tr>
+</table>

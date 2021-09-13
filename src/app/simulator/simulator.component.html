@@ -8,12 +8,17 @@
 </mat-menu>
 
 <table (window:mouseup)="finishDrawing()">
-    <tr *ngFor="let row of grid;
-      let i = index" [class.alive]="grid[i][j]" [class.dead]="!grid[i][j]">
-        <td *ngFor="let cell of row; 
-          let j = index" [class.alive]="grid[i][j]" [class.dead]="!grid[i][j]"
-          (mousedown)="startDrawing(i, j)" 
-          (mouseover)="onHover(i, j)">
-        </td>
-    </tr> 
-  </table>
+  <tr
+    *ngFor="let row of grid; let i = index"
+    [class.alive]="grid[i][j]"
+    [class.dead]="!grid[i][j]"
+  >
+    <td
+      *ngFor="let cell of row; let j = index"
+      [class.alive]="grid[i][j]"
+      [class.dead]="!grid[i][j]"
+      (mousedown)="startDrawing(i, j)"
+      (mouseover)="onHover(i, j)"
+    ></td>
+  </tr>
+</table>

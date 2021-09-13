@@ -5,11 +5,10 @@ import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FoodGroupsService {
-
-  constructor(private messageService: MessageService) { }
+  constructor(private messageService: MessageService) {}
 
   getIsleNum(): Observable<FoodGroups[]> {
     const isleNum = of(ISLES);
@@ -18,7 +17,7 @@ export class FoodGroupsService {
   }
 
   getFoodGroups(id: number): Observable<FoodGroups> {
-    const foodGroups = ISLES.find(h => h.id === id)!;
+    const foodGroups = ISLES.find((h) => h.id === id)!;
     this.messageService.add(`HeroService: fetched hero id=${id}`);
     return of(foodGroups);
   }

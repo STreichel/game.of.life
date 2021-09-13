@@ -1,10 +1,13 @@
 <div *ngIf="foodGroups">
-
-  <h2>{{foodGroups.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{foodGroups.id}}</div>
+  <h2>{{ foodGroups.name | uppercase }} Details</h2>
+  <div><span>id: </span>{{ foodGroups.id }}</div>
   <div>
     <label for="food-groups-name">Food Groups name: </label>
-    <input id="food-groups-name" [(ngModel)]="foodGroups.name" placeholder="FoodGroup name">
+    <input
+      id="food-groups-name"
+      [(ngModel)]="foodGroups.name"
+      placeholder="FoodGroup name"
+    />
   </div>
-    <button (click)="goBack()">go back</button>
+  <button (click)="goBack()">go back</button>
 </div>

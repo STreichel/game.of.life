@@ -3,15 +3,12 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-store-mart',
   templateUrl: './store-mart.component.html',
-  styleUrls: ['./store-mart.component.css']
+  styleUrls: ['./store-mart.component.css'],
 })
 export class StoreMartComponent implements OnInit {
+  title = 'Store Mart';
 
-  title = "Store Mart";
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

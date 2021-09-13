@@ -22,7 +22,10 @@ import { FoodGroupsDetailComponent } from './food-groups-detail/food-groups-deta
 import { MostUsedComponent } from './most-used/most-used.component';
 import { MessagesComponent } from './messages/messages.component';
 
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import {
+  FontAwesomeModule,
+  FaIconLibrary,
+} from '@fortawesome/angular-fontawesome';
 import { faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -56,11 +59,10 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
     HttpClientModule,
     HttpClientInMemoryWebApiModule,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-
 export class AppModule {
-  constructor(private library: FaIconLibrary){
+  constructor(private library: FaIconLibrary) {
     library.addIcons(faCrown, faYinYang);
   }
 }

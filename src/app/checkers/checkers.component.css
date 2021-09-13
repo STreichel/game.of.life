@@ -1,4 +1,4 @@
-.board{
+.board {
   margin: auto;
 }
 
@@ -8,12 +8,11 @@
   border: 5px solid #003c80;
   background: #612670;
   text-align: center;
-  
 }
 
 .board tr:nth-child(2n) td:nth-child(2n),
-.board tr:nth-child(2n+1) td:nth-child(2n+1) {
-    background-color: rgb(109, 211, 230);
+.board tr:nth-child(2n + 1) td:nth-child(2n + 1) {
+  background-color: rgb(109, 211, 230);
 }
 
 .cell:hover {
@@ -24,13 +23,12 @@
 
 .redPiece {
   color: rgb(2, 175, 80);
-  font-size:larger;
-  
+  font-size: larger;
 }
 
 .blackPiece {
   color: rgb(153, 92, 57);
-  font-size:larger;
+  font-size: larger;
 }
 
 .selected {
@@ -44,4 +42,3 @@
 .cell.clearCursor {
   cursor: default;
 }
-
