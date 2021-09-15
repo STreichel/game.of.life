@@ -21,4 +21,18 @@ export class FoodGroupsComponent implements OnInit {
       .getIsleNum()
       .subscribe((isleNum) => (this.isleNum = isleNum));
   }
+
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.foodGroupsService.addFoodGroups({ name } as FoodGroups)
+      .subscribe(foodGroups => {
+        this.isleNum.push(foodGroups);
+      });
+  }
+
+  delete(foodGroups: FoodGroups): void {
+    this.isleNum = this.isleNum.filter(h => h !== foodGroups);
+    this.foodGroupsService.deleteFoodGroups(foodGroups.id).subscribe();
+  }
 }

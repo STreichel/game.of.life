@@ -33,4 +33,11 @@ export class FoodGroupsDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+
+  save(): void{
+    if (this.foodGroups){
+      this.foodGroupsService.updateFoodGroups(this.foodGroups)
+        .subscribe(() => this.goBack());
+    }
+  }
 }

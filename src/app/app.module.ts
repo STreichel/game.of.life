@@ -32,6 +32,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './in-memory-data.service';
+import { FoodGroupsSearchComponent } from './food-groups-search/food-groups-search.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
     FoodGroupsDetailComponent,
     MessagesComponent,
     MostUsedComponent,
+    FoodGroupsSearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,9 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
     FontAwesomeModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
   bootstrap: [AppComponent],
 })

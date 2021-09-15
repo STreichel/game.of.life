@@ -1,9 +1,21 @@
 <h2>Isle Catagories</h2>
 
+<div>
+  <label for="new-foodGroups">FoodGroups name:</label>
+  <input id="new-foodGroups" #foodGroupsName />
+
+  <button class="add-button" (click)="add(foodGroupsName.value);
+    foodGroupsName.value=''">
+    Add foodGroups
+  </button>
+</div>
+
 <ul class="isleNum">
   <li *ngFor="let foodGroups of isleNum">
     <a routerLink="/detail/{{ foodGroups.id }}">
       <span class="badge">{{ foodGroups.id }}</span> {{ foodGroups.name }}
     </a>
+    <button class="delete" title ="delete foodGroups"
+      (click)="delete(foodGroups)">x</button>
   </li>
 </ul>
