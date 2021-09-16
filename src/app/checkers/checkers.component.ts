@@ -80,7 +80,7 @@ export class CheckersComponent implements OnInit {
   }
 
   JUMP_DY(p: number): number {
-    return p == 0 || p == 2 ? -2 : 2;
+    return ((p == 0) || (p == 2)) ? -2 : 2;
   }
 
   MOVE_DX(p: number): number {
@@ -88,7 +88,7 @@ export class CheckersComponent implements OnInit {
   }
 
   MOVE_DY(p: number): number {
-    return p == 0 || p == 2 ? -1 : 1;
+    return ((p == 0) || (p == 2)) ? -1 : 1;
   }
 
   constructor() {
@@ -327,6 +327,8 @@ export class CheckersComponent implements OnInit {
     // check for jump
     if (this.canJump(from_i, from_j, to_i, to_j)) {
       return true;
+    } else if (this.playerHasJump) {
+      return false;
     }
     // if delta in column or row index is not equal to 1 return false ; diagonal move, no jump
     if (Math.abs(to_i - from_i) != 1 || Math.abs(to_j - from_j) != 1) {
