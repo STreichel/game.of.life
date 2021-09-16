@@ -394,8 +394,8 @@ export class CheckersComponent implements OnInit {
       this.activePlayer,
     );
 
-    // check if this.activePlayer hasMove, if not continue
-    // if player still hasMove return to top of onCompleteMove
+    // check if current player still has jumpMove (playerHasJump), if not continue
+    // if current playerHasJump return to top of onCompleteMove and let player go again
 
     // Move to next player
     this.nextPlayer();
