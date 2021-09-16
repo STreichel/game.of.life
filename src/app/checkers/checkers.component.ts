@@ -8,19 +8,22 @@ class MoveDetails {
   to_i: number;
   to_j: number;
   capturedPiece: string;
+  player: number;
 
   constructor(
     from_i: number,
     from_j: number,
     to_i: number,
     to_j: number,
-    capturedPiece: string
+    capturedPiece: string,
+    player: number,
   ) {
     this.from_i = from_i;
     this.from_j = from_j;
     this.to_i = to_i;
     this.to_j = to_j;
     this.capturedPiece = capturedPiece;
+    this.player = player;
   }
 
   toString(): string {
@@ -77,7 +80,7 @@ export class CheckersComponent implements OnInit {
   }
 
   JUMP_DY(p: number): number {
-    return p == 0 || p == 1 ? -2 : 2;
+    return p == 0 || p == 2 ? -2 : 2;
   }
 
   MOVE_DX(p: number): number {
@@ -85,7 +88,7 @@ export class CheckersComponent implements OnInit {
   }
 
   MOVE_DY(p: number): number {
-    return p == 0 || p == 1 ? -1 : 1;
+    return p == 0 || p == 2 ? -1 : 1;
   }
 
   constructor() {
@@ -154,6 +157,10 @@ export class CheckersComponent implements OnInit {
     ) {
       this.board[mid_i][mid_j] = move.capturedPiece;
     }
+    this.activePlayer = move.player;
+    this.selected_i = -1;
+    this.selected_j = -1;
+
     this.calculateAvailableMovesForCurrentPlayer();
   }
 
@@ -285,6 +292,9 @@ export class CheckersComponent implements OnInit {
     for (let i = 0; i < this.numRows; i++) {
       newMoveType[i] = new Array<MoveType>(this.numCols);
       for (let j = 0; j < this.numCols; j++) {
+        if (this.playerPiece(this.board[i][j]) != this.activePlayer) {
+          continue;
+        }
         newMoveType[i][j] = this.getMoveKindForCell(i, j);
         if (newMoveType[i][j] == MoveType.JUMP_MOVE) {
           this.playerHasJump = true;
@@ -378,7 +388,8 @@ export class CheckersComponent implements OnInit {
       this.selected_j,
       i,
       j,
-      capturedPiece
+      capturedPiece,
+      this.activePlayer,
     );
 
     // check if this.activePlayer hasMove, if not continue
