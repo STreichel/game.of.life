@@ -70,6 +70,7 @@ export class CheckersComponent implements OnInit {
   moveCount = 0;
 
   moveType = new Array<Array<MoveType>>();
+  playerHasJump = false;
 
   JUMP_DX(p: number): number {
     return p < 2 ? -2 : 2;
@@ -124,8 +125,9 @@ export class CheckersComponent implements OnInit {
     this.selected_i = -1;
     this.selected_j = -1;
     this.activePlayer = this.PLAYER_RED;
-    return this.board;
+//    this.calculateAvailableMovesForCurrentPlayer();
   }
+
   // add each move in stack
   addMove(item: any) {
     this.moveHistory[this.moveCount] = item;
@@ -152,6 +154,7 @@ export class CheckersComponent implements OnInit {
     ) {
       this.board[mid_i][mid_j] = move.capturedPiece;
     }
+    this.calculateAvailableMovesForCurrentPlayer();
   }
 
   // stores each move in a first in, last out stack
@@ -264,7 +267,8 @@ export class CheckersComponent implements OnInit {
     for (let k = 0; k < 4; ++k) {
       // check for jump moves
       if (this.isValidMove(i, j, i + this.JUMP_DX(k), j + this.JUMP_DY(k))) {
-        return (moveType = MoveType.JUMP_MOVE);
+        moveType = MoveType.JUMP_MOVE;
+        return moveType;
         // check for regular non jump moves
       } else if (
         this.isValidMove(i, j, i + this.MOVE_DX(k), j + this.MOVE_DY(k))
@@ -275,12 +279,16 @@ export class CheckersComponent implements OnInit {
     return moveType;
   }
 
-  initializeMoveTypeArray() {
+  calculateAvailableMovesForCurrentPlayer() {
+    this.playerHasJump = false;
     let newMoveType = new Array<Array<MoveType>>(this.numRows);
     for (let i = 0; i < this.numRows; i++) {
       newMoveType[i] = new Array<MoveType>(this.numCols);
       for (let j = 0; j < this.numCols; j++) {
         newMoveType[i][j] = this.getMoveKindForCell(i, j);
+        if (newMoveType[i][j] == MoveType.JUMP_MOVE) {
+          this.playerHasJump = true;
+        }
       }
     }
     this.moveType = newMoveType;
@@ -381,6 +389,8 @@ export class CheckersComponent implements OnInit {
     // Unselects original piece/cell
     this.selected_i = -1;
     this.selected_j = -1;
+
+    this.calculateAvailableMovesForCurrentPlayer();
   }
 
   onClickedCell(i: number, j: number) {
