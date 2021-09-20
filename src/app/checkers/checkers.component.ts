@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
+import { httpClientInMemBackendServiceFactory } from 'angular-in-memory-web-api';
 
 class MoveDetails {
   from_i: number;
@@ -74,6 +75,7 @@ export class CheckersComponent implements OnInit {
 
   moveType = new Array<Array<MoveType>>();
   playerHasJump = false;
+  continuationJumpExists = false;
 
   JUMP_DX(p: number): number {
     return p < 2 ? -2 : 2;
@@ -110,16 +112,16 @@ export class CheckersComponent implements OnInit {
     this.clearMoveHistory();
     this.board = this.createBoard();
     // Black pieces starting place
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 8; j++) {
+    for (let i = 3; i < 4; i++) {
+      for (let j = 0; j < 6; j++) {
         if ((i + j) % 2 == 1) {
           this.board[i][j] = this.BLACK_PAWN;
         }
       }
     }
     // Red pieces starting place
-    for (let i = 5; i < 8; i++) {
-      for (let j = 0; j < 8; j++) {
+    for (let i = 5; i < 7; i++) {
+      for (let j = 2; j < 6; j++) {
         if ((i + j) % 2 == 1) {
           this.board[i][j] = this.RED_PAWN;
         }
@@ -130,6 +132,31 @@ export class CheckersComponent implements OnInit {
     this.activePlayer = this.PLAYER_RED;
 //    this.calculateAvailableMovesForCurrentPlayer();
   }
+
+//  newGame() {
+//    this.clearMoveHistory();
+//    this.board = this.createBoard();
+    // Black pieces starting place
+//    for (let i = 0; i < 3; i++) {
+//      for (let j = 0; j < 8; j++) {
+//        if ((i + j) % 2 == 1) {
+//          this.board[i][j] = this.BLACK_PAWN;
+//        }
+//      }
+//    }
+    // Red pieces starting place
+//    for (let i = 5; i < 8; i++) {
+//      for (let j = 0; j < 8; j++) {
+//        if ((i + j) % 2 == 1) {
+//          this.board[i][j] = this.RED_PAWN;
+//        }
+//      }
+//    }
+//    this.selected_i = -1;
+//    this.selected_j = -1;
+//    this.activePlayer = this.PLAYER_RED;
+//    this.calculateAvailableMovesForCurrentPlayer();
+//  }
 
   // add each move in stack
   addMove(item: any) {
@@ -363,8 +390,10 @@ export class CheckersComponent implements OnInit {
     }
     // Copies piece selected to selected destination
     this.board[i][j] = this.board[this.selected_i][this.selected_j];
+
     // Clears original selected cell/no piece now
     this.board[this.selected_i][this.selected_j] = this.EMPTY_CELL;
+
     // if this new destination is row 0 and icon is RED_PAWN, change icon to RED_KING/crown
     if (this.board[i][j] == this.RED_PAWN && i == 0) {
       this.board[i][j] = this.RED_KING;
@@ -394,15 +423,20 @@ export class CheckersComponent implements OnInit {
       this.activePlayer,
     );
 
-    // check if current player still has jumpMove (playerHasJump), if not continue
-    // if current playerHasJump return to top of onCompleteMove and let player go again
+    // check if current playerPiece still has jumpMove, if not continue
+//    if (this.board[i][j] == MoveType.JUMP_MOVE) {
+//      this.continuationJumpExists = true
+    // option to jump
+    // or endTurn
+    // add this play in stack
+//    } else {
 
     // Move to next player
     this.nextPlayer();
     // Unselects original piece/cell
     this.selected_i = -1;
     this.selected_j = -1;
-
+//    }
     this.calculateAvailableMovesForCurrentPlayer();
   }
 
