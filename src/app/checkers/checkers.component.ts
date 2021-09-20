@@ -424,23 +424,27 @@ export class CheckersComponent implements OnInit {
     );
 
     // check if current playerPiece still has jumpMove, if not continue
-//    if (this.board[i][j] == MoveType.JUMP_MOVE) {
-//      this.continuationJumpExists = true
+    this.moveType[i][j] = this.getMoveKindForCell(i, j)
+    if (this.getMoveKindForCell(i, j) == MoveType.JUMP_MOVE) {
+      this.continuationJumpExists = true ;
+
     // option to jump
     // or endTurn
     // add this play in stack
-//    } else {
 
+      } else {
     // Move to next player
     this.nextPlayer();
     // Unselects original piece/cell
     this.selected_i = -1;
     this.selected_j = -1;
-//    }
+    }
     this.calculateAvailableMovesForCurrentPlayer();
   }
 
   onClickedCell(i: number, j: number) {
+    // possibly add to find if continuationJumpExists
+
     // if this piece is unselected, we can startMove
     if (this.selected_i == -1 || this.selected_j == -1) {
       this.onStartMove(i, j);
