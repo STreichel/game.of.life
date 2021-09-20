@@ -6,6 +6,8 @@
 
 <button (click)="undoLastMove()">Undo Last Move</button>
 
+selected_i is {{ selected_i }} selected_j is {{ selected_j }}
+
 <table id="board" class="board">
   <tr *ngFor="let row of board; let i = index">
     <td

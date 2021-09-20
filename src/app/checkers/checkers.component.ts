@@ -130,7 +130,7 @@ export class CheckersComponent implements OnInit {
     this.selected_i = -1;
     this.selected_j = -1;
     this.activePlayer = this.PLAYER_RED;
-//    this.calculateAvailableMovesForCurrentPlayer();
+    this.calculateAvailableMovesForCurrentPlayer();
   }
 
 //  newGame() {
@@ -370,7 +370,6 @@ export class CheckersComponent implements OnInit {
   }
 
   onStartMove(i: number, j: number) {
-    //    this.initializeMoveTypeArray();
     // make sure the cell is occupied before selecting
     if (this.playerPiece(this.board[i][j]) != this.activePlayer) {
       return;
@@ -413,6 +412,7 @@ export class CheckersComponent implements OnInit {
       capturedPiece = this.board[mid_i][mid_j];
       this.board[mid_i][mid_j] = this.EMPTY_CELL;
     }
+
     // stores previous play in stack
     this.moveHistory[this.moveCount++] = new MoveDetails(
       this.selected_i,
@@ -425,14 +425,15 @@ export class CheckersComponent implements OnInit {
 
     // check if current playerPiece still has jumpMove, if not continue
     this.moveType[i][j] = this.getMoveKindForCell(i, j)
-    if (this.getMoveKindForCell(i, j) == MoveType.JUMP_MOVE) {
+    if (this.getMoveKindForCell(i, j) == MoveType.JUMP_MOVE && this.playerHasJump) {
       this.continuationJumpExists = true ;
+      this.selected_i = i;
+      this.selected_j = j;
 
-    // option to jump
     // or endTurn
-    // add this play in stack
 
       } else {
+
     // Move to next player
     this.nextPlayer();
     // Unselects original piece/cell
@@ -443,18 +444,22 @@ export class CheckersComponent implements OnInit {
   }
 
   onClickedCell(i: number, j: number) {
-    // possibly add to find if continuationJumpExists
 
     // if this piece is unselected, we can startMove
     if (this.selected_i == -1 || this.selected_j == -1) {
       this.onStartMove(i, j);
-      // unselect piece if clicked twice, clear your "click"
-    } else if (i == this.selected_i && j == this.selected_j) {
+
+    // unselect piece if clicked twice, clear your "click"
+    } else if (i == this.selected_i && j == this.selected_j){
+      if (this.continuationJumpExists) {
+      return;
+      }
       this.selected_i = -1;
       this.selected_j = -1;
-      // copy, delete, unselect and move to nextPlayer
+
+    // copy, delete, unselect and move to nextPlayer
     } else {
-      this.onCompleteMove(i, j);
+    this.onCompleteMove(i, j);
     }
     return;
   }
