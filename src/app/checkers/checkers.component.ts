@@ -76,6 +76,10 @@ export class CheckersComponent implements OnInit {
   playerHasJump = false;
   continuationJumpExists = false;
 
+  winner = null;
+  redPieceCount: 12;
+  blackPiececount: 12;
+
   JUMP_DX(p: number): number {
     return p < 2 ? -2 : 2;
   }
@@ -409,6 +413,11 @@ export class CheckersComponent implements OnInit {
     ) {
       capturedPiece = this.board[mid_i][mid_j];
       this.board[mid_i][mid_j] = this.EMPTY_CELL;
+
+    // when piece jumped, keep count by color
+    // if (this.board[mid_i][mid_j] = this.PLAYER_RED) {
+    //   redPieceCount --
+    // }
     }
 
     // stores previous play in stack
@@ -476,9 +485,12 @@ export class CheckersComponent implements OnInit {
   }
 
   displayWinner(i, j){
+
     // if this.board doesn't have any PLAYER_RED playerPiece left, display black wins
+    // if (this.redPieceCount == 0) { this.winner = "Player Black Wins!!" }
 
     // if this.board doesn't have any PLAYER_BLACK playerPiece left, display red wins
+    // if (this.blackPieceCount == 0) { this.winner = "Player Red Wins!!" }
   }
 
   ngOnInit(): void {}
