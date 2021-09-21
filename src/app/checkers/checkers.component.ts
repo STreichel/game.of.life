@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 
 import { faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
@@ -64,8 +65,6 @@ export class CheckersComponent implements OnInit {
   PLAYER_BLACK = 2;
 
   activePlayer = this.PLAYER_RED;
-
-  WINNER = null;
 
   selected_i: number = -1;
   selected_j: number = -1;
@@ -190,7 +189,6 @@ export class CheckersComponent implements OnInit {
 
     this.calculateAvailableMovesForCurrentPlayer();
   }
-
   // stores each move in a first in, last out stack
   lastMove() {
     if (this.isMoveHistoryEmpty()) {
@@ -429,18 +427,11 @@ export class CheckersComponent implements OnInit {
       this.continuationJumpExists = true ;
       this.selected_i = i;
       this.selected_j = j;
+      this.calculateAvailableMovesForCurrentPlayer();
 
-    // or endTurn
-
-      } else {
-
-    // Move to next player
-    this.nextPlayer();
-    // Unselects original piece/cell
-    this.selected_i = -1;
-    this.selected_j = -1;
+    } else {
+      this.endMove();
     }
-    this.calculateAvailableMovesForCurrentPlayer();
   }
 
   onClickedCell(i: number, j: number) {
@@ -452,14 +443,14 @@ export class CheckersComponent implements OnInit {
     // unselect piece if clicked twice, clear your "click"
     } else if (i == this.selected_i && j == this.selected_j){
       if (this.continuationJumpExists) {
-      return;
+        return;
       }
       this.selected_i = -1;
       this.selected_j = -1;
 
     // copy, delete, unselect and move to nextPlayer
     } else {
-    this.onCompleteMove(i, j);
+      this.onCompleteMove(i, j);
     }
     return;
   }
@@ -471,6 +462,23 @@ export class CheckersComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  endMove(){
+    // moves to next player
+    this.nextPlayer();
+    // unselects original piece/cell
+    this.selected_i = -1;
+    this.selected_j = -1;
+    this.continuationJumpExists = false;
+
+    this.calculateAvailableMovesForCurrentPlayer();
+  }
+
+  displayWinner(i, j){
+    // if this.board doesn't have any PLAYER_RED playerPiece left, display black wins
+
+    // if this.board doesn't have any PLAYER_BLACK playerPiece left, display red wins
   }
 
   ngOnInit(): void {}
