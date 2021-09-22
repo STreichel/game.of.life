@@ -1,8 +1,6 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 
 import { faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
-import { httpClientInMemBackendServiceFactory } from 'angular-in-memory-web-api';
 
 class MoveDetails {
   from_i: number;
@@ -70,15 +68,14 @@ export class CheckersComponent implements OnInit {
   selected_j: number = -1;
 
   moveHistory: MoveDetails[] = [];
-  moveCount = 0;
+  moveCount: 0;
 
   moveType = new Array<Array<MoveType>>();
   playerHasJump = false;
   continuationJumpExists = false;
+  playerHasValidMove = false;
 
-  winner = null;
-  redPieceCount: 12;
-  blackPiececount: 12;
+  gameOverDisplay = null;
 
   JUMP_DX(p: number): number {
     return p < 2 ? -2 : 2;
@@ -316,6 +313,7 @@ export class CheckersComponent implements OnInit {
   }
 
   calculateAvailableMovesForCurrentPlayer() {
+    this.playerHasValidMove = false;
     this.playerHasJump = false;
     let newMoveType = new Array<Array<MoveType>>(this.numRows);
     for (let i = 0; i < this.numRows; i++) {
@@ -326,8 +324,19 @@ export class CheckersComponent implements OnInit {
         }
         newMoveType[i][j] = this.getMoveKindForCell(i, j);
         if (newMoveType[i][j] == MoveType.JUMP_MOVE) {
+          if (MoveType.JUMP_MOVE || MoveType.VALID_MOVE){
+            this.playerHasValidMove = true;
+          }
           this.playerHasJump = true;
         }
+      }
+    }
+    // if this player has a valid move return, else if then call winner
+    if (!this.playerHasJump && !this.playerHasValidMove){
+      if (this.activePlayer == this.PLAYER_BLACK) {
+        this.gameOverDisplay = "Red Player Wins!!";
+      } else {
+        this.gameOverDisplay = "Black Player Wins!!";
       }
     }
     this.moveType = newMoveType;
@@ -413,11 +422,6 @@ export class CheckersComponent implements OnInit {
     ) {
       capturedPiece = this.board[mid_i][mid_j];
       this.board[mid_i][mid_j] = this.EMPTY_CELL;
-
-    // when piece jumped, keep count by color
-    // if (this.board[mid_i][mid_j] = this.PLAYER_RED) {
-    //   redPieceCount --
-    // }
     }
 
     // stores previous play in stack
@@ -482,15 +486,6 @@ export class CheckersComponent implements OnInit {
     this.continuationJumpExists = false;
 
     this.calculateAvailableMovesForCurrentPlayer();
-  }
-
-  displayWinner(i, j){
-
-    // if this.board doesn't have any PLAYER_RED playerPiece left, display black wins
-    // if (this.redPieceCount == 0) { this.winner = "Player Black Wins!!" }
-
-    // if this.board doesn't have any PLAYER_BLACK playerPiece left, display red wins
-    // if (this.blackPieceCount == 0) { this.winner = "Player Red Wins!!" }
   }
 
   ngOnInit(): void {}
