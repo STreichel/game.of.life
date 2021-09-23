@@ -324,15 +324,15 @@ export class CheckersComponent implements OnInit {
         }
         newMoveType[i][j] = this.getMoveKindForCell(i, j);
         if (newMoveType[i][j] == MoveType.JUMP_MOVE) {
-          if (MoveType.JUMP_MOVE || MoveType.VALID_MOVE){
+          this.playerHasJump = true;
+        }  else if (MoveType.JUMP_MOVE || MoveType.VALID_MOVE){
             this.playerHasValidMove = true;
           }
-          this.playerHasJump = true;
-        }
       }
     }
-    // if this player has a valid move return, else if then call winner
+    // if this player doesn't have jumpMove or validMove
     if (!this.playerHasJump && !this.playerHasValidMove){
+      // if this player is black, red player wins, else black player wins
       if (this.activePlayer == this.PLAYER_BLACK) {
         this.gameOverDisplay = "Red Player Wins!!";
       } else {

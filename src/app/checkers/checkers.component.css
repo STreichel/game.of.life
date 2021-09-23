@@ -42,3 +42,15 @@
 .cell.clearCursor {
   cursor: default;
 }
+
+.winner {
+  background-color: #070707;
+  max-width: 10em;
+  margin: 1em;
+  margin-left: 36em;
+}
+
+.winnerText {
+  color:beige;
+  text-align: center;
+}

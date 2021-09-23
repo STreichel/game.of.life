@@ -7,6 +7,13 @@
 <button (click)="undoLastMove()">Undo Last Move</button>
 <button (click)="endMove()">End Move</button>
 
+<mat-card class='winner'>
+  <mat-card-content class='winnerText'>
+<div *ngIf="gameOverDisplay == 'Red Player Wins!!'">Red Player Wins!!</div>
+<div *ngIf="gameOverDisplay == 'Black Player Wins!!'">Black Player Wins!!</div>
+  </mat-card-content>
+</mat-card>
+
 <table id="board" class="board">
   <tr *ngFor="let row of board; let i = index">
     <td
