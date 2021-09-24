@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
 import { faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
+import { timer } from 'rxjs';
 
 class MoveDetails {
   from_i: number;
@@ -9,6 +9,7 @@ class MoveDetails {
   to_j: number;
   capturedPiece: string;
   player: number;
+  isPromotion: boolean;
 
   constructor(
     from_i: number,
@@ -17,6 +18,7 @@ class MoveDetails {
     to_j: number,
     capturedPiece: string,
     player: number,
+    isPromotion: boolean,
   ) {
     this.from_i = from_i;
     this.from_j = from_j;
@@ -24,6 +26,7 @@ class MoveDetails {
     this.to_j = to_j;
     this.capturedPiece = capturedPiece;
     this.player = player;
+    this.isPromotion = isPromotion;
   }
 
   toString(): string {
@@ -71,11 +74,13 @@ export class CheckersComponent implements OnInit {
   moveCount: 0;
 
   moveType = new Array<Array<MoveType>>();
+
   playerHasJump = false;
   continuationJumpExists = false;
   playerHasValidMove = false;
 
   gameOverDisplay = null;
+  showPieceWithAvailableMoves = false;
 
   JUMP_DX(p: number): number {
     return p < 2 ? -2 : 2;
@@ -187,6 +192,9 @@ export class CheckersComponent implements OnInit {
     this.activePlayer = move.player;
     this.selected_i = -1;
     this.selected_j = -1;
+
+    // 'need to add that if a player is kinged and undoLastMove is picked,
+    //  the piece needs to return to a pawn'
 
     this.calculateAvailableMovesForCurrentPlayer();
   }
@@ -338,6 +346,7 @@ export class CheckersComponent implements OnInit {
       } else {
         this.gameOverDisplay = "Black Player Wins!!";
       }
+    // stop undoMove from working after winner is called
     }
     this.moveType = newMoveType;
   }
@@ -349,6 +358,7 @@ export class CheckersComponent implements OnInit {
     to_i: number,
     to_j: number
   ): boolean {
+
     // if (i, j) is not a true location on the board return false
     if (!this.isInBounds(from_i, from_j)) {
       return false;
@@ -388,12 +398,13 @@ export class CheckersComponent implements OnInit {
     // new variables to save new piece to
     this.selected_i = i;
     this.selected_j = j;
-    if (this.activePlayer == this.playerPiece(this.board[i][j])) {
-      this.isValidMove(this.selected_i, this.selected_j, i, j);
+    if (this.activePlayer == this.playerPiece(this.board[i][j])){
+      this.isValidMove(i, j, i, j);
     }
   }
 
   onCompleteMove(i: number, j: number) {
+    let isPromotion = false;
     // make sure move is valid
     if (!this.isValidMove(this.selected_i, this.selected_j, i, j)) {
       return;
@@ -407,10 +418,12 @@ export class CheckersComponent implements OnInit {
     // if this new destination is row 0 and icon is RED_PAWN, change icon to RED_KING/crown
     if (this.board[i][j] == this.RED_PAWN && i == 0) {
       this.board[i][j] = this.RED_KING;
+      isPromotion = true;
     }
     // if this new destination is row 8 and icon is BLACK_PAWN, change icon to BLACK_KING/crown
     if (this.board[i][j] == this.BLACK_PAWN && i == this.board.length - 1) {
       this.board[i][j] = this.BLACK_KING;
+      isPromotion = true;
     }
     // delete icon if jumped over
     let capturedPiece = this.EMPTY_CELL;
@@ -432,6 +445,7 @@ export class CheckersComponent implements OnInit {
       j,
       capturedPiece,
       this.activePlayer,
+      isPromotion,
     );
 
     // check if current playerPiece still has jumpMove, if not continue
@@ -448,11 +462,10 @@ export class CheckersComponent implements OnInit {
   }
 
   onClickedCell(i: number, j: number) {
-
     // if this piece is unselected, we can startMove
     if (this.selected_i == -1 || this.selected_j == -1) {
+      this.flashPieceWithAvailableMoves;
       this.onStartMove(i, j);
-
     // unselect piece if clicked twice, clear your "click"
     } else if (i == this.selected_i && j == this.selected_j){
       if (this.continuationJumpExists) {
@@ -486,6 +499,14 @@ export class CheckersComponent implements OnInit {
     this.continuationJumpExists = false;
 
     this.calculateAvailableMovesForCurrentPlayer();
+  }
+
+  // add timer to flash(isSelected) available pieces of current player that have valid moves
+  flashPieceWithAvailableMoves() {
+    this.showPieceWithAvailableMoves = true;
+    timer(1000).subscribe((t) => {
+      this.showPieceWithAvailableMoves = false;
+    })
   }
 
   ngOnInit(): void {}

@@ -9,8 +9,7 @@
 
 <mat-card class='winner'>
   <mat-card-content class='winnerText'>
-<div *ngIf="gameOverDisplay == 'Red Player Wins!!'">Red Player Wins!!</div>
-<div *ngIf="gameOverDisplay == 'Black Player Wins!!'">Black Player Wins!!</div>
+<div *ngIf="gameOverDisplay != null">{{gameOverDisplay}}</div>
   </mat-card-content>
 </mat-card>
 
@@ -21,7 +20,7 @@
       class="cell"
       (click)="onClickedCell(i, j)"
       [class]="{
-        selected: isSelected(i, j),
+        selected: isSelected(i, j) || (flashPieceWithAvailableMoves && moveType[i][j] != NO_MOVE),
         validMove: isValidMove(selected_i, selected_j, i, j),
         clearCursor: playerPiece(board[i][j]) != activePlayer
       }"
