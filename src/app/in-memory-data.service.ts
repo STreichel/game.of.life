@@ -25,4 +25,18 @@ export class InMemoryDataService implements InMemoryDbService {
   genId(isleNum: FoodGroups[]): number {
     return isleNum.length > 0 ? Math.max(...isleNum.map(foodGroups => foodGroups.id)) + 1 : 11;
   }
+
+  // make itemsList be the string of the name in the array
+  sortByName(itemsList: { name: string }[]) {
+    for(let i = 0; i < itemsList.length; i++){
+      let j = i - 1;
+      let key = itemsList[i];
+      while(j > 0 && itemsList[j] > key){
+        itemsList[j + 1] = itemsList[j];
+        j = j - 1;
+      }
+      itemsList[j + 1] = key;
+    }
+    return itemsList;
+  }
 }

@@ -266,11 +266,13 @@ export class CheckersComponent implements OnInit {
   }
 
   // check to see if the cell is occupied or empty
-  isOccupied(i: number, j: number): boolean {
-    if (this.board[i][j] == this.EMPTY_CELL) {
-      return false;
-    } else {
+  isValidDestination(i: number, j: number): boolean {
+    if (i < 0 || j < 0 || i >= this.numRows || j >= this.numCols) {
       return true;
+    } else if (this.board[i][j] == this.EMPTY_CELL) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -284,7 +286,7 @@ export class CheckersComponent implements OnInit {
       return false;
     }
     // if destination has piece, can't jump
-    if (this.isOccupied(to_i, to_j)) {
+    if (!this.isValidDestination(to_i, to_j)) {
       return false;
     }
     // new variables for inbetween startMove and completeMove
@@ -383,17 +385,16 @@ export class CheckersComponent implements OnInit {
       return false;
     }
     // if there's another piece at (i, j) return false
-    if (this.isOccupied(to_i, to_j)) {
-      return false;
-    } else {
-      return true;
-    }
+    return !this.isValidDestination(to_i, to_j);
   }
 
   onStartMove(i: number, j: number) {
     // make sure the cell is occupied before selecting
     if (this.playerPiece(this.board[i][j]) != this.activePlayer) {
       return;
+    }
+    if (!this.playerHasValidMove){
+      this.flashPieceWithAvailableMoves();
     }
     // new variables to save new piece to
     this.selected_i = i;
@@ -464,8 +465,8 @@ export class CheckersComponent implements OnInit {
   onClickedCell(i: number, j: number) {
     // if this piece is unselected, we can startMove
     if (this.selected_i == -1 || this.selected_j == -1) {
-      this.flashPieceWithAvailableMoves;
       this.onStartMove(i, j);
+
     // unselect piece if clicked twice, clear your "click"
     } else if (i == this.selected_i && j == this.selected_j){
       if (this.continuationJumpExists) {
