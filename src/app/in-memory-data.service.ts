@@ -19,6 +19,7 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 9, name: 'Household' },
       { id: 10, name: 'Pharmacy' }
     ];
+    this.sortByName(isleNum);
     return {isleNum};
   }
 
@@ -27,11 +28,11 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 
   // make itemsList be the string of the name in the array
-  sortByName(itemsList: { name: string }[]) {
+  sortByName (itemsList: { name: string }[]){
     for(let i = 0; i < itemsList.length; i++){
       let j = i - 1;
       let key = itemsList[i];
-      while(j > 0 && itemsList[j] > key){
+      while(j >= 0 && itemsList[j].name > key.name){
         itemsList[j + 1] = itemsList[j];
         j = j - 1;
       }

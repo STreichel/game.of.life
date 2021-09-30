@@ -385,7 +385,7 @@ export class CheckersComponent implements OnInit {
       return false;
     }
     // if there's another piece at (i, j) return false
-    return !this.isValidDestination(to_i, to_j);
+    return this.isValidDestination(to_i, to_j);
   }
 
   onStartMove(i: number, j: number) {
@@ -393,9 +393,9 @@ export class CheckersComponent implements OnInit {
     if (this.playerPiece(this.board[i][j]) != this.activePlayer) {
       return;
     }
-    if (!this.playerHasValidMove){
-      this.flashPieceWithAvailableMoves();
-    }
+//    if (!this.playerHasValidMove){
+//      this.flashPieceWithAvailableMoves();
+//    }
     // new variables to save new piece to
     this.selected_i = i;
     this.selected_j = j;
@@ -504,10 +504,10 @@ export class CheckersComponent implements OnInit {
 
   // add timer to flash(isSelected) available pieces of current player that have valid moves
   flashPieceWithAvailableMoves() {
-    this.showPieceWithAvailableMoves = true;
-    timer(1000).subscribe((t) => {
-      this.showPieceWithAvailableMoves = false;
-    })
+//    this.showPieceWithAvailableMoves = true;
+//    timer(1000).subscribe((t) => {
+//      this.showPieceWithAvailableMoves = false;
+//    })
   }
 
   ngOnInit(): void {}
