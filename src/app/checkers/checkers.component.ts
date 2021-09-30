@@ -177,9 +177,13 @@ export class CheckersComponent implements OnInit {
     delete this.moveHistory[this.moveCount - 1];
     this.moveCount--;
     this.moveHistory.length = this.moveCount;
-    // undo board
+
+
+    // undo board use isPromotion
     this.board[move.from_i][move.from_j] = this.board[move.to_i][move.to_j];
     this.board[move.to_i][move.to_j] = this.EMPTY_CELL;
+
+
     // un-delete previous captured piece if there was one
     let mid_i = (move.from_i + move.to_i) / 2;
     let mid_j = (move.from_j + move.to_j) / 2;
@@ -268,7 +272,7 @@ export class CheckersComponent implements OnInit {
   // check to see if the cell is occupied or empty
   isValidDestination(i: number, j: number): boolean {
     if (i < 0 || j < 0 || i >= this.numRows || j >= this.numCols) {
-      return true;
+      return false;
     } else if (this.board[i][j] == this.EMPTY_CELL) {
       return true;
     } else {
