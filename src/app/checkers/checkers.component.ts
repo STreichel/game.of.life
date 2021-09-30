@@ -391,17 +391,12 @@ export class CheckersComponent implements OnInit {
   onStartMove(i: number, j: number) {
     // make sure the cell is occupied before selecting
     if (this.playerPiece(this.board[i][j]) != this.activePlayer) {
+      this.flashPieceWithAvailableMoves();
       return;
     }
-//    if (!this.playerHasValidMove){
-//      this.flashPieceWithAvailableMoves();
-//    }
     // new variables to save new piece to
     this.selected_i = i;
     this.selected_j = j;
-    if (this.activePlayer == this.playerPiece(this.board[i][j])){
-      this.isValidMove(i, j, i, j);
-    }
   }
 
   onCompleteMove(i: number, j: number) {
@@ -465,6 +460,7 @@ export class CheckersComponent implements OnInit {
   onClickedCell(i: number, j: number) {
     // if this piece is unselected, we can startMove
     if (this.selected_i == -1 || this.selected_j == -1) {
+      this.flashPieceWithAvailableMoves();
       this.onStartMove(i, j);
 
     // unselect piece if clicked twice, clear your "click"
@@ -504,10 +500,10 @@ export class CheckersComponent implements OnInit {
 
   // add timer to flash(isSelected) available pieces of current player that have valid moves
   flashPieceWithAvailableMoves() {
-//    this.showPieceWithAvailableMoves = true;
-//    timer(1000).subscribe((t) => {
-//      this.showPieceWithAvailableMoves = false;
-//    })
+    this.showPieceWithAvailableMoves = true;
+    timer(1000).subscribe((t) => {
+      this.showPieceWithAvailableMoves = false;
+    })
   }
 
   ngOnInit(): void {}
