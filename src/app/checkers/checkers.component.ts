@@ -180,9 +180,20 @@ export class CheckersComponent implements OnInit {
 
 
     // undo board use isPromotion
-    this.board[move.from_i][move.from_j] = this.board[move.to_i][move.to_j];
-    this.board[move.to_i][move.to_j] = this.EMPTY_CELL;
-
+    let isPromotion = false;
+    if (isPromotion = false) {
+      this.board[move.from_i][move.from_j] = this.board[move.to_i][move.to_j];
+      this.board[move.to_i][move.to_j] = this.EMPTY_CELL;
+    } else if (isPromotion = true) {
+      if (this.board[move.to_i][move.to_j] == this.BLACK_KING){
+        this.board[move.to_i][move.to_j] = this.BLACK_PAWN;
+      }
+      if (this.board[move.to_i][move.to_j] == this.RED_KING){
+        this.board[move.to_i][move.to_j] = this.RED_PAWN;
+      }
+      this.board[move.from_i][move.from_j] = this.board[move.to_i][move.to_j];
+      this.board[move.to_i][move.to_j] = this.EMPTY_CELL;
+    }
 
     // un-delete previous captured piece if there was one
     let mid_i = (move.from_i + move.to_i) / 2;
