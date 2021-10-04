@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NumberValueAccessor } from '@angular/forms';
 import { faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
 import { timer } from 'rxjs';
 
@@ -213,8 +212,10 @@ export class CheckersComponent implements OnInit {
     this.selected_i = -1;
     this.selected_j = -1;
 
-    // 'need to add that if a player is kinged and undoLastMove is picked,
-    //  the piece needs to return to a pawn'
+    // need to reset winnerCheck if undoMove
+    if (this.gameOverDisplay != null){
+      this.gameOverDisplay = null;
+    }
 
     this.calculateAvailableMovesForCurrentPlayer();
   }
@@ -409,14 +410,15 @@ export class CheckersComponent implements OnInit {
   }
 
   onStartMove(i: number, j: number) {
-    // make sure the cell is occupied before selecting
+    // make sure the cell is occupied and has a validDestination before selecting
     if (this.playerPiece(this.board[i][j]) != this.activePlayer) {
+
+    /////// && (this.playerPiece(this.board[i][j]) == this.playerHasValidMove)){
+
         this.flashPieceWithAvailableMoves();
       return;
     }
-//    if (this.playerPiece(this.board[i][j]) != this.isValidMove){
-//      return;
-//    }
+
     // new variables to save new piece to
     this.selected_i = i;
     this.selected_j = j;
@@ -482,6 +484,9 @@ export class CheckersComponent implements OnInit {
 
   onClickedCell(i: number, j: number) {
     // if this piece is unselected, we can startMove
+
+    /////// why can't I add right here not to select a piece that doesn't have a valid move?
+
     if (this.selected_i == -1 || this.selected_j == -1) {
       this.flashPieceWithAvailableMoves();
       this.onStartMove(i, j);
@@ -503,8 +508,11 @@ export class CheckersComponent implements OnInit {
 
   // checking to see if a cell is selected ; css styling
   isSelected(i: number, j: number): boolean {
-    if (i == this.selected_i && j == this.selected_j) {
+    let BEST_POSSIBLE_MOVE_FOR_PLAYER = this.playerHasJump ? MoveType.JUMP_MOVE : MoveType.VALID_MOVE;
+    if (i == this.selected_i && j == this.selected_j){
       return true;
+    } if (this.showPieceWithAvailableMoves && this.moveType[i][j] == BEST_POSSIBLE_MOVE_FOR_PLAYER) {
+        return true;
     } else {
       return false;
     }
