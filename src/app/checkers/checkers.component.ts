@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NumberValueAccessor } from '@angular/forms';
 import { faCrown, faYinYang } from '@fortawesome/free-solid-svg-icons';
 import { timer } from 'rxjs';
 
@@ -178,22 +179,26 @@ export class CheckersComponent implements OnInit {
     this.moveCount--;
     this.moveHistory.length = this.moveCount;
 
+    // undo board use isPromotion for unKing feature
+    let isPromotion = move.isPromotion;
 
-    // undo board use isPromotion
-    let isPromotion = false;
-    if (isPromotion = false) {
+    // if isPromotion is false then let undoMove normally
+    if (!isPromotion){
       this.board[move.from_i][move.from_j] = this.board[move.to_i][move.to_j];
       this.board[move.to_i][move.to_j] = this.EMPTY_CELL;
-    } else if (isPromotion = true) {
-      if (this.board[move.to_i][move.to_j] == this.BLACK_KING){
+
+      // if isPromotion is true and this piece is BLACK_KING, undoMove makes BLACK_KING a BLACK_PAWN
+    } else if (isPromotion  && this.board[move.to_i][move.to_j] == this.BLACK_KING){
         this.board[move.to_i][move.to_j] = this.BLACK_PAWN;
+        this.board[move.from_i][move.from_j] = this.board[move.to_i][move.to_j];
+        this.board[move.to_i][move.to_j] = this.EMPTY_CELL;
       }
-      if (this.board[move.to_i][move.to_j] == this.RED_KING){
+      // if isPromotion is true and this piece is RED_KING, undoMove makes RED_KING a RED_PAWN
+      if (isPromotion && this.board[move.to_i][move.to_j] == this.RED_KING) {
         this.board[move.to_i][move.to_j] = this.RED_PAWN;
+        this.board[move.from_i][move.from_j] = this.board[move.to_i][move.to_j];
+        this.board[move.to_i][move.to_j] = this.EMPTY_CELL;
       }
-      this.board[move.from_i][move.from_j] = this.board[move.to_i][move.to_j];
-      this.board[move.to_i][move.to_j] = this.EMPTY_CELL;
-    }
 
     // un-delete previous captured piece if there was one
     let mid_i = (move.from_i + move.to_i) / 2;
@@ -406,9 +411,12 @@ export class CheckersComponent implements OnInit {
   onStartMove(i: number, j: number) {
     // make sure the cell is occupied before selecting
     if (this.playerPiece(this.board[i][j]) != this.activePlayer) {
-      this.flashPieceWithAvailableMoves();
+        this.flashPieceWithAvailableMoves();
       return;
     }
+//    if (this.playerPiece(this.board[i][j]) != this.isValidMove){
+//      return;
+//    }
     // new variables to save new piece to
     this.selected_i = i;
     this.selected_j = j;
