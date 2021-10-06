@@ -117,16 +117,16 @@ export class CheckersComponent implements OnInit {
     this.clearMoveHistory();
     this.board = this.createBoard();
     // Black pieces starting place
-    for (let i = 3; i < 4; i++) {
-      for (let j = 0; j < 6; j++) {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 8; j++) {
         if ((i + j) % 2 == 1) {
           this.board[i][j] = this.BLACK_PAWN;
         }
       }
     }
     // Red pieces starting place
-    for (let i = 5; i < 7; i++) {
-      for (let j = 2; j < 6; j++) {
+    for (let i = 5; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
         if ((i + j) % 2 == 1) {
           this.board[i][j] = this.RED_PAWN;
         }
@@ -137,31 +137,6 @@ export class CheckersComponent implements OnInit {
     this.activePlayer = this.PLAYER_RED;
     this.calculateAvailableMovesForCurrentPlayer();
   }
-
-//  newGame() {
-//    this.clearMoveHistory();
-//    this.board = this.createBoard();
-    // Black pieces starting place
-//    for (let i = 0; i < 3; i++) {
-//      for (let j = 0; j < 8; j++) {
-//        if ((i + j) % 2 == 1) {
-//          this.board[i][j] = this.BLACK_PAWN;
-//        }
-//      }
-//    }
-    // Red pieces starting place
-//    for (let i = 5; i < 8; i++) {
-//      for (let j = 0; j < 8; j++) {
-//        if ((i + j) % 2 == 1) {
-//          this.board[i][j] = this.RED_PAWN;
-//        }
-//      }
-//    }
-//    this.selected_i = -1;
-//    this.selected_j = -1;
-//    this.activePlayer = this.PLAYER_RED;
-//    this.calculateAvailableMovesForCurrentPlayer();
-//  }
 
   // add each move in stack
   addMove(item: any) {
