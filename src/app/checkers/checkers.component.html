@@ -20,7 +20,7 @@
       class="cell"
       (click)="onClickedCell(i, j)"
       [class]="{
-        selected: isSelected(i, j) || (showPieceWithAvailableMoves && moveType[i][j] != NO_MOVE),
+        selected: isSelected(i, j),
         validMove: isValidMove(selected_i, selected_j, i, j),
         clearCursor: playerPiece(board[i][j]) != activePlayer
       }"

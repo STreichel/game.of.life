@@ -506,11 +506,15 @@ export class CheckersComponent implements OnInit {
 
   // checking to see if a cell is selected ; css styling
   isSelected(i: number, j: number): boolean {
-    if (i == this.selected_i && j == this.selected_j){
+    if (i == this.selected_i && j == this.selected_j) {
+      return true;
+    }
+    let bestPossibleMoveForPlayer = this.playerHasJump ? MoveType.JUMP_MOVE : MoveType.VALID_MOVE;
+    if (this.showPieceWithAvailableMoves && this.moveType[i][j] == bestPossibleMoveForPlayer){
       return true;
     } else {
-      return false;
-    }
+        return false;
+      }
   }
 
   endMove(){
