@@ -413,10 +413,11 @@ export class CheckersComponent implements OnInit {
     // make sure the cell is occupied and has a validDestination before selecting
     if (this.playerPiece(this.board[i][j]) != this.activePlayer) {
 
-    /////// && (this.playerPiece(this.board[i][j]) == this.playerHasValidMove)){
+//      if (this.playerPiece(this.board[i][j]) == this.isValidDestination && this.moveType[i][j] == MoveType.JUMP_MOVE){
 
         this.flashPieceWithAvailableMoves();
       return;
+//      }
     }
 
     // new variables to save new piece to
@@ -484,10 +485,8 @@ export class CheckersComponent implements OnInit {
 
   onClickedCell(i: number, j: number) {
     // if this piece is unselected, we can startMove
-
-    /////// why can't I add right here not to select a piece that doesn't have a valid move?
-
-    if (this.selected_i == -1 || this.selected_j == -1) {
+    if (this.selected_i == -1 || this.selected_j == -1
+      && this.moveType[this.selected_i][this.selected_j] != MoveType.JUMP_MOVE) {
       this.flashPieceWithAvailableMoves();
       this.onStartMove(i, j);
 
