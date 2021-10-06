@@ -412,12 +412,8 @@ export class CheckersComponent implements OnInit {
   onStartMove(i: number, j: number) {
     // make sure the cell is occupied and has a validDestination before selecting
     if (this.playerPiece(this.board[i][j]) != this.activePlayer) {
-
-//      if (this.playerPiece(this.board[i][j]) == this.isValidDestination && this.moveType[i][j] == MoveType.JUMP_MOVE){
-
         this.flashPieceWithAvailableMoves();
       return;
-//      }
     }
 
     // new variables to save new piece to
@@ -485,11 +481,14 @@ export class CheckersComponent implements OnInit {
 
   onClickedCell(i: number, j: number) {
     // if this piece is unselected, we can startMove
-    if (this.selected_i == -1 || this.selected_j == -1
-      && this.moveType[this.selected_i][this.selected_j] != MoveType.JUMP_MOVE) {
+    if (this.selected_i == -1 || this.selected_j == -1) {
+      let bestMoveType = this.playerHasJump ? MoveType.JUMP_MOVE : MoveType.VALID_MOVE;
+      if (this.moveType[i][j] != bestMoveType) {
       this.flashPieceWithAvailableMoves();
-      this.onStartMove(i, j);
-
+      }
+      else {
+        this.onStartMove(i, j);
+      }
     // unselect piece if clicked twice, clear your "click"
     } else if (i == this.selected_i && j == this.selected_j){
       if (this.continuationJumpExists) {
@@ -507,11 +506,8 @@ export class CheckersComponent implements OnInit {
 
   // checking to see if a cell is selected ; css styling
   isSelected(i: number, j: number): boolean {
-    let BEST_POSSIBLE_MOVE_FOR_PLAYER = this.playerHasJump ? MoveType.JUMP_MOVE : MoveType.VALID_MOVE;
     if (i == this.selected_i && j == this.selected_j){
       return true;
-    } if (this.showPieceWithAvailableMoves && this.moveType[i][j] == BEST_POSSIBLE_MOVE_FOR_PLAYER) {
-        return true;
     } else {
       return false;
     }
